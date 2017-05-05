@@ -168,7 +168,7 @@
                         <xs:element name="token" type="xs:string"/>
                         <xs:element minOccurs="0" name="administrativeArea" type="xs:string"/>
                         <xs:element minOccurs="0" name="dormitoryOwner" type="xs:string"/>
-                        <xs:element name="dormitoryCondition" type="tns:dormitoryConditionType"/>
+                        <xs:element minOccurs="0" name="dormitoryCondition" type="tns:dormitoryConditionType"/>
                         <xs:element minOccurs="0" name="hasRelatedTenants">
                             <xs:simpleType>
                                 <xs:restriction base="xs:string">

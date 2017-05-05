@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/emvei/Documents/Ülikool/4.%20semester/IDU0075%20-%20Veebiteenused/Projekt/dormitoryService.wsdl" uri="src/conf/xml-resources/web-services/DormitoryService1/wsdl/dormitoryService.wsdl"/>
+</catalog>

@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="d26389fd-8eb8-4288-ba99-42134e018acf" activeEnvironment="Default" name="DormitoryService old" resourceRoot="" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="3c1681c6-5700-4292-9beb-995680e69ab4" wsaVersion="NONE" name="dormitoryBinding" type="wsdl" bindingName="{http://www.ttu.ee/idu0075/2015/ws/dormitory}dormitoryBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/DormitoryWebApplication1/dormitoryService1?WSDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/DormitoryWebApplication1/dormitoryService1?WSDL"><con:part><con:url>http://localhost:8080/DormitoryWebApplication1/dormitoryService1?WSDL</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown.-->
+<wsdl:definitions targetNamespace="http://www.ttu.ee/idu0075/2015/ws/dormitory" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://www.ttu.ee/idu0075/2015/ws/dormitory" elementFormDefault="qualified">
+      <xs:simpleType name="idCodeType">
+        <xs:restriction base="xs:integer">
+          <xs:totalDigits value="11"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="statusType">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="active|inactive"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="genderType">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="male|female|other"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="dormitoryConditionType">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="renovated|new|old"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="tenantType">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer"/>
+          <xs:element name="firstName" type="xs:string"/>
+          <xs:element name="lastName" type="xs:string"/>
+          <xs:element name="idCode" type="tns:idCodeType"/>
+          <xs:element name="gender" type="tns:genderType"/>
+          <xs:element name="studentStatus" type="tns:statusType"/>
+          <xs:element name="university" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="dormitoryTenantType">
+        <xs:sequence>
+          <xs:element name="tenant" type="tns:tenantType"/>
+          <xs:element name="startDate" type="xs:date"/>
+          <xs:element name="endDate" type="xs:date"/>
+          <xs:element name="status" type="tns:statusType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="dormitoryTenantListType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="dormitoryTenant" type="tns:dormitoryTenantType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="dormitoryType">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer"/>
+          <xs:element name="administrativeArea" type="xs:string"/>
+          <xs:element name="dormitoryAddress" type="xs:string"/>
+          <xs:element name="dormitoryCapacity" type="xs:integer"/>
+          <xs:element name="dormitoryOwner" type="xs:string"/>
+          <xs:element name="dormitoryCondition" type="tns:dormitoryConditionType"/>
+          <xs:element name="dormitoryTenantList" type="tns:dormitoryTenantListType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="getTenantRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="id" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getTenantResponse" type="tns:tenantType"/>
+      <xs:element name="addTenantRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="requestCode" type="xs:integer"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="idCode" type="tns:idCodeType"/>
+            <xs:element name="gender" type="tns:genderType"/>
+            <xs:element name="studentStatus" type="tns:statusType"/>
+            <xs:element name="university" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addTenantResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="responseCode" type="xs:integer"/>
+            <xs:element name="tenant" type="tns:tenantType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getTenantListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+            <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+            <xs:element minOccurs="0" name="gender" type="tns:genderType"/>
+            <xs:element minOccurs="0" name="studentStatus" type="tns:statusType"/>
+            <xs:element minOccurs="0" name="university" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getTenantListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="tenant" type="tns:tenantType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getDormitoryRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="id" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getDormitoryResponse" type="tns:dormitoryType"/>
+      <xs:element name="addDormitoryRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="requestCode" type="xs:integer"/>
+            <xs:element name="administrativeArea" type="xs:string"/>
+            <xs:element name="dormitoryAddress" type="xs:string"/>
+            <xs:element name="dormitoryCapacity" type="xs:integer"/>
+            <xs:element name="dormitoryOwner" type="xs:string"/>
+            <xs:element name="dormitoryCondition" type="tns:dormitoryConditionType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addDormitoryResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="responseCode" type="xs:integer"/>
+            <xs:element name="dormitory" type="tns:dormitoryType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getDormitoryListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element minOccurs="0" name="administrativeArea" type="xs:string"/>
+            <xs:element minOccurs="0" name="dormitoryOwner" type="xs:string"/>
+            <xs:element minOccurs="0" name="hasRelatedTenants">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:pattern value="yes|no"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getDormitoryListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="dormitory" type="tns:dormitoryType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getDormitoryTenantListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="dormitoryId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getDormitoryTenantListResponse" type="tns:dormitoryTenantListType"/>
+      <xs:element name="addDormitoryTenantRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="requestCode" type="xs:integer"/>
+            <xs:element name="dormitoryId" type="xs:integer"/>
+            <xs:element name="tenantId" type="xs:integer"/>
+            <xs:element name="startDate" type="xs:date"/>
+            <xs:element name="endDate" type="xs:date"/>
+            <xs:element name="status" type="tns:statusType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addDormitoryTenantResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="responseCode" type="xs:integer"/>
+            <xs:element name="dormitoryTenant" type="tns:dormitoryTenantType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getTenantMessageRequest">
+    <wsdl:part name="parameter" element="tns:getTenantRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getTenantMessageResponse">
+    <wsdl:part name="parameter" element="tns:getTenantResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addTenantMessageRequest">
+    <wsdl:part name="parameter" element="tns:addTenantRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addTenantMessageResponse">
+    <wsdl:part name="parameter" element="tns:addTenantResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getTenantListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getTenantListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getTenantListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getTenantListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getDormitoryMessageRequest">
+    <wsdl:part name="parameter" element="tns:getDormitoryRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getDormitoryMessageResponse">
+    <wsdl:part name="parameter" element="tns:getDormitoryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addDormitoryMessageRequest">
+    <wsdl:part name="parameter" element="tns:addDormitoryRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addDormitoryMessageResponse">
+    <wsdl:part name="parameter" element="tns:addDormitoryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getDormitoryListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getDormitoryListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getDormitoryListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getDormitoryListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getDormitoryTenantListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getDormitoryTenantListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getDormitoryTenantListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getDormitoryTenantListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addDormitoryTenantMessageRequest">
+    <wsdl:part name="parameter" element="tns:addDormitoryTenantRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addDormitoryTenantMessageResponse">
+    <wsdl:part name="parameter" element="tns:addDormitoryTenantResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="dormitoryPortType">
+    <wsdl:operation name="getTenant">
+      <wsdl:input message="tns:getTenantMessageRequest"/>
+      <wsdl:output message="tns:getTenantMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addTenant">
+      <wsdl:input message="tns:addTenantMessageRequest"/>
+      <wsdl:output message="tns:addTenantMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getTenantList">
+      <wsdl:input message="tns:getTenantListMessageRequest"/>
+      <wsdl:output message="tns:getTenantListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getDormitory">
+      <wsdl:input message="tns:getDormitoryMessageRequest"/>
+      <wsdl:output message="tns:getDormitoryMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addDormitory">
+      <wsdl:input message="tns:addDormitoryMessageRequest"/>
+      <wsdl:output message="tns:addDormitoryMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getDormitoryList">
+      <wsdl:input message="tns:getDormitoryListMessageRequest"/>
+      <wsdl:output message="tns:getDormitoryListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getDormitoryTenantList">
+      <wsdl:input message="tns:getDormitoryTenantListMessageRequest"/>
+      <wsdl:output message="tns:getDormitoryTenantListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addDormitoryTenant">
+      <wsdl:input message="tns:addDormitoryTenantMessageRequest"/>
+      <wsdl:output message="tns:addDormitoryTenantMessageResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="dormitoryBinding" type="tns:dormitoryPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getTenant">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addTenant">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTenantList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDormitory">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addDormitory">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDormitoryList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDormitoryTenantList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addDormitoryTenant">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="dormitoryService1">
+    <wsdl:port name="dormitoryPort" binding="tns:dormitoryBinding">
+      <soap:address location="http://localhost:8080/DormitoryWebApplication1/dormitoryService1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:endpoint>http://ltp-w540:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:endpoint>http://tp-w540:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint></con:endpoints><con:operation id="991d5ffe-a6e5-406e-ac1d-56e6d8bc01d0" isOneWay="false" action="" name="addDormitory" bindingOperationName="addDormitory" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="824867d4-63a6-4023-8215-c87d847ab8a8" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://tp-w540:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <dor:addDormitoryRequest>\r
+         <dor:token>asd</dor:token>\r
+         <dor:requestCode>?</dor:requestCode>\r
+         <dor:administrativeArea>?</dor:administrativeArea>\r
+         <dor:dormitoryAddress>?</dor:dormitoryAddress>\r
+         <dor:dormitoryCapacity>?</dor:dormitoryCapacity>\r
+         <dor:dormitoryOwner>?</dor:dormitoryOwner>\r
+         <dor:dormitoryCondition>?</dor:dormitoryCondition>\r
+      </dor:addDormitoryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addDormitoryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="77c36f90-3d3a-4045-90c3-776311214d5c" isOneWay="false" action="" name="addDormitoryTenant" bindingOperationName="addDormitoryTenant" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="60ca5e34-b9bb-4062-874e-daf569e9da67" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://tp-w540:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <dor:addDormitoryTenantRequest>\r
+         <dor:token>asd</dor:token>\r
+         <dor:requestCode>1</dor:requestCode>\r
+         <dor:dormitoryId>1</dor:dormitoryId>\r
+         <dor:tenantId>2</dor:tenantId>\r
+         <dor:startDate>2012-12-12</dor:startDate>\r
+         <dor:endDate>2012-12-12</dor:endDate>\r
+         <dor:status>active</dor:status>\r
+      </dor:addDormitoryTenantRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addDormitoryTenantRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="11549a2a-10e4-4623-adfe-bf8413004929" isOneWay="false" action="" name="addTenant" bindingOperationName="addTenant" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="5fe6ede3-3c21-447e-aba6-adecbb4f655d" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tp-w540:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <dor:addTenantRequest>\r
+         <dor:token>?</dor:token>\r
+         <dor:requestCode>?</dor:requestCode>\r
+         <dor:firstName>?</dor:firstName>\r
+         <dor:lastName>?</dor:lastName>\r
+         <dor:idCode>?</dor:idCode>\r
+         <dor:gender>?</dor:gender>\r
+         <dor:studentStatus>?</dor:studentStatus>\r
+         <dor:university>?</dor:university>\r
+      </dor:addTenantRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addTenantRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="ab533147-0227-4b8e-bd03-56b34fc6888c" isOneWay="false" action="" name="getDormitory" bindingOperationName="getDormitory" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2f30e5e3-aeb3-4328-8fef-7f5019badbe7" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tp-w540:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <dor:getDormitoryRequest>\r
+         <dor:token>?</dor:token>\r
+         <dor:id>?</dor:id>\r
+      </dor:getDormitoryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getDormitoryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="6fd24318-8d4b-4169-893d-264a3447f0b2" isOneWay="false" action="" name="getDormitoryList" bindingOperationName="getDormitoryList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="7e8c1057-a44d-4ed9-8c08-eaf24e1332e0" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://tp-w540:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getDormitoryListRequest>
+         <dor:token>?</dor:token>
+         <!--Optional:-->
+         <dor:administrativeArea>Tartu</dor:administrativeArea>
+         <!--Optional:-->
+         <dor:dormitoryOwner>?</dor:dormitoryOwner>
+         <!--Optional:-->
+         <dor:hasRelatedTenants>?</dor:hasRelatedTenants>
+      </dor:getDormitoryListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getDormitoryListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="634fa168-d2ee-4acb-abe1-e197878b4108" isOneWay="false" action="" name="getDormitoryTenantList" bindingOperationName="getDormitoryTenantList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="804f71e6-9233-4ee3-aa1f-455aca155694" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://tp-w540:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <dor:getDormitoryTenantListRequest>\r
+         <dor:token>asd</dor:token>\r
+         <dor:dormitoryId>1</dor:dormitoryId>\r
+      </dor:getDormitoryTenantListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getDormitoryTenantListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="7f542241-8dfb-4159-9f96-f107c60d1829" isOneWay="false" action="" name="getTenant" bindingOperationName="getTenant" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c117590b-07e8-43cf-9191-1b3afd5907ea" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tp-w540:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <dor:getTenantRequest>\r
+         <dor:token>?</dor:token>\r
+         <dor:id>?</dor:id>\r
+      </dor:getTenantRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getTenantRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="0bc07bda-961b-4cb0-8477-cc0630adb5d6" isOneWay="false" action="" name="getTenantList" bindingOperationName="getTenantList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b0bafdc6-8437-4aa0-aedc-0c764ac7ea5a" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tp-w540:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getTenantListRequest>
+         <dor:token>?</dor:token>
+         <!--Optional:-->
+         <dor:firstName>?</dor:firstName>
+         <!--Optional:-->
+         <dor:lastName>?</dor:lastName>
+         <!--Optional:-->
+         <dor:gender>?</dor:gender>
+         <!--Optional:-->
+         <dor:studentStatus>?</dor:studentStatus>
+         <!--Optional:-->
+         <dor:university>?</dor:university>
+      </dor:getTenantListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getTenantListRequest"/></con:call></con:operation></con:interface><con:testSuite id="c592af89-3039-4d97-b0f5-7ef4ae56fe4c" name="dormitoryBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="2111706e-3be6-409d-82d7-d44d79649787" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addDormitory TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="d5a3e26c-e363-443a-9132-875f29a1cf0a" name="addDormitory id=1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addDormitory</con:operation><con:request name="addDormitory id=1" id="e9d0d69c-c91c-4d0c-8440-08e518cf25ce"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addDormitoryRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>1</dor:requestCode>
+         <dor:administrativeArea>Tallinn</dor:administrativeArea>
+         <dor:dormitoryAddress>Akadeemia tee 11/2, Mustamäe</dor:dormitoryAddress>
+         <dor:dormitoryCapacity>240</dor:dormitoryCapacity>
+         <dor:dormitoryOwner>TTU</dor:dormitoryOwner>
+         <dor:dormitoryCondition>renovated</dor:dormitoryCondition>
+      </dor:addDormitoryRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="f23c8f93-700b-4e7f-8422-4e463d2042ce" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="9d121b20-5027-464e-9e87-8c6940556d05" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitoryAddress</path><content>Akadeemia tee 11/2, Mustamäe</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addDormitoryRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="e66eb51c-9b1c-4c26-a210-0b5ca61e2b3c" name="addDormitory id=2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addDormitory</con:operation><con:request name="addDormitory id=2" id="e9d0d69c-c91c-4d0c-8440-08e518cf25ce"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addDormitoryRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>2</dor:requestCode>
+         <dor:administrativeArea>Tallinn</dor:administrativeArea>
+         <dor:dormitoryAddress>Raja 4D, Mustamäe</dor:dormitoryAddress>
+         <dor:dormitoryCapacity>196</dor:dormitoryCapacity>
+         <dor:dormitoryOwner>TTU</dor:dormitoryOwner>
+         <dor:dormitoryCondition>renovated</dor:dormitoryCondition>
+      </dor:addDormitoryRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="d2319f04-51fc-4fcd-8975-22713b4449af" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="60e50908-e1a3-448b-89eb-0d30bdfde059" name="XPath Match"><con:configuration><path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+//ns1:dormitoryAddress</path><content>Raja 4D, Mustamäe</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addDormitoryRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="273aba6b-4090-4793-b0e9-e8dff1c1740a" name="addDormitory id=3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addDormitory</con:operation><con:request name="addDormitory id=3" id="e9d0d69c-c91c-4d0c-8440-08e518cf25ce"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addDormitoryRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>3</dor:requestCode>
+         <dor:administrativeArea>Tartu</dor:administrativeArea>
+         <dor:dormitoryAddress>Raatuse 22</dor:dormitoryAddress>
+         <dor:dormitoryCapacity>250</dor:dormitoryCapacity>
+         <dor:dormitoryOwner>TU</dor:dormitoryOwner>
+         <dor:dormitoryCondition>new</dor:dormitoryCondition>
+      </dor:addDormitoryRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="d2319f04-51fc-4fcd-8975-22713b4449af" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="60e50908-e1a3-448b-89eb-0d30bdfde059" name="XPath Match"><con:configuration><path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+//ns1:dormitoryAddress</path><content>Raatuse 22</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addDormitoryRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="267bfe01-1cd7-44db-b38c-fe7a9a82853b" name="addDormitory duplicateRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addDormitory</con:operation><con:request name="addDormitory duplicateRequest" id="e9d0d69c-c91c-4d0c-8440-08e518cf25ce"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addDormitoryRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>3</dor:requestCode>
+         <dor:administrativeArea>Tartu</dor:administrativeArea>
+         <dor:dormitoryAddress>Mingi tee 13</dor:dormitoryAddress>
+         <dor:dormitoryCapacity>280</dor:dormitoryCapacity>
+         <dor:dormitoryOwner>TU</dor:dormitoryOwner>
+         <dor:dormitoryCondition>new</dor:dormitoryCondition>
+      </dor:addDormitoryRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="d2319f04-51fc-4fcd-8975-22713b4449af" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="60e50908-e1a3-448b-89eb-0d30bdfde059" name="XPath Match"><con:configuration><path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+//ns1:dormitoryAddress</path><content>Raatuse 22</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Simple NotContains" id="21256f4a-0663-40b0-9674-31db450fd43b" name="Not Contains DuplicateAddress"><con:configuration><token>"Mingi tee 13"</token><ignoreCase>true</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addDormitoryRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="2193aece-7a88-4e42-8fad-1419691d5518" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getDormitory TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="b8738423-5b92-433b-99ee-b0d0e0ce8ed5" name="getDormitory id=1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getDormitory</con:operation><con:request name="getDormitory id=1" id="b928c266-7e6b-4b2e-a662-75f5eff6bf46"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getDormitoryRequest>
+         <dor:token>asd</dor:token>
+         <dor:id>1</dor:id>
+      </dor:getDormitoryRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="e0aef888-90ad-418f-8f60-640066246aa9" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="ad312e23-0ad3-4e70-ba50-d468230df4a7" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitoryAddress</path><content>Akadeemia tee 11/2, Mustamäe</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getDormitoryRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="dc346af7-d942-4013-9e3b-132f416023f1" name="getDormitory id=2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getDormitory</con:operation><con:request name="getDormitory id=2" id="b928c266-7e6b-4b2e-a662-75f5eff6bf46"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getDormitoryRequest>
+         <dor:token>asd</dor:token>
+         <dor:id>1</dor:id>
+      </dor:getDormitoryRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="97535a76-a45c-4fc7-9182-9a9bbd56b900" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="bc77b01b-9612-4f4f-9556-4fcfcf20709f" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitoryAddress</path><content>Akadeemia tee 11/2, Mustamäe</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getDormitoryRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f7eb110b-09f6-4a81-be3b-cbcb5fb4cfd9" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getDormitoryList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="afac64ae-8c1c-4874-9449-df8805b2aa54" name="getDormitoryList param=none"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getDormitoryList</con:operation><con:request name="getDormitoryList param=none" id="d247521e-4cd1-4948-b478-af35a4562a79"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getDormitoryListRequest>
+         <dor:token>asd</dor:token>
+      </dor:getDormitoryListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="62adb6aa-d2eb-4be1-b254-b0b1d87f246b" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="681a8db1-4fb2-43b1-b1e7-2ecafd82177b" name="XPath Match: Akadeemia 11"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitory[1]/ns1:dormitoryAddress</path><content>Akadeemia tee 11/2, Mustamäe</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="c0f9c037-64a0-4eb2-a20f-ae2e497ed02b" name="XPath Match: Raja 4"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitory[2]/ns1:dormitoryAddress</path><content>Raja 4D, Mustamäe</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="a5ce3d67-7081-4de8-bfd4-7cd6c565866a" name="XPath Match: Raatuse 22"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitory[3]/ns1:dormitoryAddress</path><content>Raatuse 22</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getDormitoryListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="ebc5230c-817f-4daf-ae09-27aa5759ab8d" name="getDormitoryList area=Tln"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getDormitoryList</con:operation><con:request name="getDormitoryList area=Tln" id="d247521e-4cd1-4948-b478-af35a4562a79"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getDormitoryListRequest>
+         <dor:token>asd</dor:token>
+         <!--Optional:-->
+         <dor:administrativeArea>Tallinn</dor:administrativeArea>
+      </dor:getDormitoryListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="e06cba5f-15ce-4991-8eb2-956c8c1c9462" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="eac847a3-98a5-49c2-97db-20fd62e47a51" name="XPath Match: Akadeemia 11"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitory[1]/ns1:dormitoryAddress</path><content>Akadeemia tee 11/2, Mustamäe</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="eac847a3-98a5-49c2-97db-20fd62e47a51" name="XPath Match: Raja 4"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitory[2]/ns1:dormitoryAddress</path><content>Raja 4D, Mustamäe</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getDormitoryListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="2c76fa55-768e-4b1c-91c3-b8c74a620789" name="getDormitoryList area=Trt"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getDormitoryList</con:operation><con:request name="getDormitoryList area=Trt" id="d247521e-4cd1-4948-b478-af35a4562a79"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getDormitoryListRequest>
+         <dor:token>asd</dor:token>
+         <!--Optional:-->
+         <dor:administrativeArea>Tartu</dor:administrativeArea>
+      </dor:getDormitoryListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="e06cba5f-15ce-4991-8eb2-956c8c1c9462" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="eac847a3-98a5-49c2-97db-20fd62e47a51" name="XPath Match: Akadeemia 11"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitory[1]/ns1:dormitoryAddress</path><content>Raatuse 22</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getDormitoryListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="c9378ab9-ac07-4c3c-abfc-df7b795cc92b" name="Copy of Copy of getDormitoryList" disabled="true"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getDormitoryList</con:operation><con:request name="Copy of Copy of getDormitoryList" id="d247521e-4cd1-4948-b478-af35a4562a79"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getDormitoryListRequest>
+         <dor:token>asd</dor:token>
+         <!--Optional:-->
+         <dor:administrativeArea>?</dor:administrativeArea>
+         <!--Optional:-->
+         <dor:dormitoryOwner>?</dor:dormitoryOwner>
+         <!--Optional:-->
+         <dor:hasRelatedTenants>?</dor:hasRelatedTenants>
+      </dor:getDormitoryListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getDormitoryListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6436c57d-b9ec-4e8c-9b73-afbbb2ee06c6" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addTenant TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="0036d549-98c3-4503-8ff7-f09d78df5598" name="addTenant id=1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addTenant</con:operation><con:request name="addTenant id=1" id="57fe6ece-6593-419d-ae19-664d3dc0071c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>1</dor:requestCode>
+         <dor:firstName>Eva Maria</dor:firstName>
+         <dor:lastName>Veitmaa</dor:lastName>
+         <dor:idCode>49606064219</dor:idCode>
+         <dor:gender>female</dor:gender>
+         <dor:studentStatus>active</dor:studentStatus>
+         <dor:university>TTU</dor:university>
+      </dor:addTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="0c3b9457-e200-470c-8b94-112baebebd01" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="62362f01-f8b1-4fd3-bd26-25707ea8d7ea" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:idCode</path><content>49606064219</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="079bbca8-5d3a-4640-9673-6405ebb5dc69" name="addTenant id=2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addTenant</con:operation><con:request name="addTenant id=2" id="57fe6ece-6593-419d-ae19-664d3dc0071c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>2</dor:requestCode>
+         <dor:firstName>John</dor:firstName>
+         <dor:lastName>Smith</dor:lastName>
+         <dor:idCode>39211040028</dor:idCode>
+         <dor:gender>male</dor:gender>
+         <dor:studentStatus>active</dor:studentStatus>
+         <dor:university>TTU</dor:university>
+      </dor:addTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="369b00e8-b993-4076-b4f7-69f4aa666ba8" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="72949046-5ccd-4de0-9945-afd102277136" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:idCode</path><content>39211040028</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="cab1cf3d-fb92-422d-bbb1-c2144f88b6da" name="addTenant id=3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addTenant</con:operation><con:request name="addTenant id=3" id="57fe6ece-6593-419d-ae19-664d3dc0071c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>3</dor:requestCode>
+         <dor:firstName>Peter</dor:firstName>
+         <dor:lastName>Griffin</dor:lastName>
+         <dor:idCode>36108201573</dor:idCode>
+         <dor:gender>male</dor:gender>
+         <dor:studentStatus>active</dor:studentStatus>
+         <dor:university>TTU</dor:university>
+      </dor:addTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="369b00e8-b993-4076-b4f7-69f4aa666ba8" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="72949046-5ccd-4de0-9945-afd102277136" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:idCode</path><content>36108201573</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="51ed4038-fb67-4153-a4e4-1e4f006ba48c" name="addTenant id=4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addTenant</con:operation><con:request name="addTenant id=4" id="57fe6ece-6593-419d-ae19-664d3dc0071c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>4</dor:requestCode>
+         <dor:firstName>Mary</dor:firstName>
+         <dor:lastName>Little</dor:lastName>
+         <dor:idCode>49201040028</dor:idCode>
+         <dor:gender>female</dor:gender>
+         <dor:studentStatus>inactive</dor:studentStatus>
+         <dor:university>TTU</dor:university>
+      </dor:addTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="369b00e8-b993-4076-b4f7-69f4aa666ba8" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="72949046-5ccd-4de0-9945-afd102277136" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:idCode</path><content>49201040028</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d366be9f-4428-45f9-a0af-272f61edb908" name="addTenant id=5"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addTenant</con:operation><con:request name="addTenant id=5" id="57fe6ece-6593-419d-ae19-664d3dc0071c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>5</dor:requestCode>
+         <dor:firstName>James</dor:firstName>
+         <dor:lastName>May</dor:lastName>
+         <dor:idCode>39405090028</dor:idCode>
+         <dor:gender>male</dor:gender>
+         <dor:studentStatus>active</dor:studentStatus>
+         <dor:university>TU</dor:university>
+      </dor:addTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="369b00e8-b993-4076-b4f7-69f4aa666ba8" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="72949046-5ccd-4de0-9945-afd102277136" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:idCode</path><content>39405090028</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="5882021c-8745-4b91-9d79-e78f865fe595" name="addTenant duplicateRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addTenant</con:operation><con:request name="addTenant duplicateRequest" id="57fe6ece-6593-419d-ae19-664d3dc0071c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>1</dor:requestCode>
+         <dor:firstName>Louis</dor:firstName>
+         <dor:lastName>Lane</dor:lastName>
+         <dor:idCode>49606064219</dor:idCode>
+         <dor:gender>female</dor:gender>
+         <dor:studentStatus>active</dor:studentStatus>
+         <dor:university>TLU</dor:university>
+      </dor:addTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="0c3b9457-e200-470c-8b94-112baebebd01" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="62362f01-f8b1-4fd3-bd26-25707ea8d7ea" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:idCode</path><content>49606064219</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Simple NotContains" id="f5801130-d681-4fd2-8c95-1e8520f9a37f" name="Not Contains wrongName"><con:configuration><token>"Lane"</token><ignoreCase>true</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="65749400-901a-4ce0-b1b2-124da9e5db8c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getTenant TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="2662f36e-345f-4ece-b6b7-c41e5e4798d6" name="getTenant id=1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getTenant</con:operation><con:request name="getTenant id=1" id="c015fe35-54bd-492c-aeda-f2f44a385a25"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:id>1</dor:id>
+      </dor:getTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="f63fae55-7e47-4ae0-b19b-cbecf6fc2bb1" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="2f3ea84c-6fa7-4d43-a292-f69e9dce380c" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:idCode</path><content>49606064219</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="8d86f05a-7eba-4174-84a5-8fb6e98c3989" name="getTenant id=2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getTenant</con:operation><con:request name="getTenant id=2" id="c015fe35-54bd-492c-aeda-f2f44a385a25"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:id>2</dor:id>
+      </dor:getTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="f63fae55-7e47-4ae0-b19b-cbecf6fc2bb1" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="2f3ea84c-6fa7-4d43-a292-f69e9dce380c" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:idCode</path><content>39211040028</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="1992d7b4-4307-407a-81eb-7bb15e6ff358" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getTenantList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="ea6f136b-959a-4d73-be86-e322f41282a9" name="getTenantList param=none"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getTenantList</con:operation><con:request name="getTenantList param=none" id="a1458be4-f621-4008-9c0b-349cf4cca6ae"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getTenantListRequest>
+         <dor:token>asd</dor:token>
+      </dor:getTenantListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="ac470596-74df-47ea-85c6-b4547e13acaf" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="9678bb90-c28d-418c-bfc6-bee68711af73" name="XPath Match id=1"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[1]/ns1:idCode</path><content>49606064219</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="9678bb90-c28d-418c-bfc6-bee68711af73" name="XPath Match id=2"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[2]/ns1:idCode</path><content>39211040028</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="9678bb90-c28d-418c-bfc6-bee68711af73" name="XPath Match id=3"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[3]/ns1:idCode</path><content>36108201573</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="9678bb90-c28d-418c-bfc6-bee68711af73" name="XPath Match id=4"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[4]/ns1:idCode</path><content>49201040028</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="9678bb90-c28d-418c-bfc6-bee68711af73" name="XPath Match id=5"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[5]/ns1:idCode</path><content>39405090028</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getTenantListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="4601b37b-05d1-4677-bd1a-a95dc98c2f34" name="getTenantList" disabled="true"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getTenantList</con:operation><con:request name="getTenantList" id="a1458be4-f621-4008-9c0b-349cf4cca6ae"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getTenantListRequest>
+         <dor:token>asd</dor:token>
+         <!--Optional:-->
+         <dor:firstName>?</dor:firstName>
+         <!--Optional:-->
+         <dor:lastName>?</dor:lastName>
+         <!--Optional:-->
+         <dor:gender>?</dor:gender>
+         <!--Optional:-->
+         <dor:studentStatus>?</dor:studentStatus>
+         <!--Optional:-->
+         <dor:university>?</dor:university>
+      </dor:getTenantListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getTenantListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="ffb609cb-5f39-4737-9ac2-3550dd3ccc20" name="getTenantList gender=female&amp;uni=TTÜ"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getTenantList</con:operation><con:request name="getTenantList gender=female&amp;uni=TTÜ" id="a1458be4-f621-4008-9c0b-349cf4cca6ae"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getTenantListRequest>
+         <dor:token>asd</dor:token>
+         <!--Optional:-->
+         <dor:gender>female</dor:gender>
+         <!--Optional:-->
+         <dor:university>TTU</dor:university>
+      </dor:getTenantListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="74afd9f2-9771-4f51-b8f5-bfce05ba998f" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="b3bda328-8736-4dbf-bf67-928c8732613b" name="XPath Match id=1"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[1]/ns1:idCode</path><content>49606064219</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="b3bda328-8736-4dbf-bf67-928c8732613b" name="XPath Match id=2"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[2]/ns1:idCode</path><content>49201040028</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getTenantListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="43203883-aa5f-4eb8-b3db-7ee5e42b2721" name="getTenantList uni=TTÜ"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getTenantList</con:operation><con:request name="getTenantList uni=TTÜ" id="a1458be4-f621-4008-9c0b-349cf4cca6ae"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getTenantListRequest>
+         <dor:token>asd</dor:token>
+         <!--Optional:-->
+         <dor:university>TTU</dor:university>
+      </dor:getTenantListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="cc09eb74-2a4d-42ac-ac10-7d5a9e976545" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="60c2f90b-5acb-433f-8620-8921793890a2" name="XPath Match id=1"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[1]/ns1:idCode</path><content>49606064219</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="60c2f90b-5acb-433f-8620-8921793890a2" name="XPath Match id=2"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[2]/ns1:idCode</path><content>39211040028</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="60c2f90b-5acb-433f-8620-8921793890a2" name="XPath Match id=3"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[3]/ns1:idCode</path><content>36108201573</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="60c2f90b-5acb-433f-8620-8921793890a2" name="XPath Match id=4"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant[4]/ns1:idCode</path><content>49201040028</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getTenantListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="0ecda40a-68c7-4843-bfa6-5377d61f5cc4" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addDormitoryTenant TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="648f0653-0f0a-4579-bbc9-f5851bccb65a" name="addDormitoryTenant dorm=1 tenant=1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addDormitoryTenant</con:operation><con:request name="addDormitoryTenant dorm=1 tenant=1" id="2433c7ee-8d00-492c-bcf6-a6fce5909d46"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addDormitoryTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>1</dor:requestCode>
+         <dor:dormitoryId>1</dor:dormitoryId>
+         <dor:tenantId>1</dor:tenantId>
+         <dor:startDate>2015-08-16</dor:startDate>
+         <dor:endDate>2017-06-10</dor:endDate>
+         <dor:status>active</dor:status>
+      </dor:addDormitoryTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="86d5edd1-b546-44ec-9472-a34b63fa6163" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="e9bc55bc-667d-4f35-bee6-37d2c8187da4" name="XPath Match tenant"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:tenant/ns1:id</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addDormitoryTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="162085c5-5267-46d3-badb-e85423292874" name="addDormitoryTenant dorm=1 tenant=2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addDormitoryTenant</con:operation><con:request name="addDormitoryTenant dorm=1 tenant=2" id="2433c7ee-8d00-492c-bcf6-a6fce5909d46"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addDormitoryTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>2</dor:requestCode>
+         <dor:dormitoryId>1</dor:dormitoryId>
+         <dor:tenantId>2</dor:tenantId>
+         <dor:startDate>2014-11-01</dor:startDate>
+         <dor:endDate>2017-06-10</dor:endDate>
+         <dor:status>active</dor:status>
+      </dor:addDormitoryTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="86d5edd1-b546-44ec-9472-a34b63fa6163" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="e9bc55bc-667d-4f35-bee6-37d2c8187da4" name="XPath Match tenant"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:addDormitoryTenantResponse/ns1:dormitoryTenant//ns1:id</path><content>2</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addDormitoryTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="e2dcc429-17b1-4da4-ac89-5d4be4e191f1" name="addDormitoryTenant duplicateRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>addDormitoryTenant</con:operation><con:request name="addDormitoryTenant duplicateRequest" id="2433c7ee-8d00-492c-bcf6-a6fce5909d46"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:addDormitoryTenantRequest>
+         <dor:token>asd</dor:token>
+         <dor:requestCode>2</dor:requestCode>
+         <dor:dormitoryId>1</dor:dormitoryId>
+         <dor:tenantId>6</dor:tenantId>
+         <dor:startDate>2014-11-01</dor:startDate>
+         <dor:endDate>2017-06-10</dor:endDate>
+         <dor:status>active</dor:status>
+      </dor:addDormitoryTenantRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="86d5edd1-b546-44ec-9472-a34b63fa6163" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="e9bc55bc-667d-4f35-bee6-37d2c8187da4" name="XPath Match tenant"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:addDormitoryTenantResponse/ns1:dormitoryTenant//ns1:id</path><content>2</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/addDormitoryTenantRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b5378f07-be58-40a3-b35f-0ee5431001d8" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getDormitoryTenantList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="6528dcf1-9bf7-4568-9099-b96b621c891c" name="getDormitoryTenantList id=1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>dormitoryBinding</con:interface><con:operation>getDormitoryTenantList</con:operation><con:request name="getDormitoryTenantList id=1" id="1bf82afe-0907-41cf-9307-ad06c8aaaa88"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/DormitoryWebApplication1/dormitoryService1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dor:getDormitoryTenantListRequest>
+         <dor:token>asd</dor:token>
+         <dor:dormitoryId>1</dor:dormitoryId>
+      </dor:getDormitoryTenantListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="c94a58f4-9c33-410c-acd2-c72fbf6a9770" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="b97f6322-e4ab-479d-b897-b2274cfd5b8f" name="XPath Match tenant=1"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitoryTenant[1]//ns1:id</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="b97f6322-e4ab-479d-b897-b2274cfd5b8f" name="XPath Match tenant=2"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/dormitory';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:dormitoryTenant[2]//ns1:id</path><content>2</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/dormitory/dormitoryPortType/getDormitoryTenantListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

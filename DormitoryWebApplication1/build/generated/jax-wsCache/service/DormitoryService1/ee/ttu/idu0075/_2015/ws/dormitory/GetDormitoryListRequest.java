@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="administrativeArea" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="dormitoryOwner" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="dormitoryCondition" type="{http://www.ttu.ee/idu0075/2015/ws/dormitory}dormitoryConditionType" minOccurs="0"/&gt;
  *         &lt;element name="hasRelatedTenants" minOccurs="0"&gt;
  *           &lt;simpleType&gt;
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -41,6 +42,7 @@ import javax.xml.bind.annotation.XmlType;
     "token",
     "administrativeArea",
     "dormitoryOwner",
+    "dormitoryCondition",
     "hasRelatedTenants"
 })
 @XmlRootElement(name = "getDormitoryListRequest")
@@ -50,6 +52,7 @@ public class GetDormitoryListRequest {
     protected String token;
     protected String administrativeArea;
     protected String dormitoryOwner;
+    protected String dormitoryCondition;
     protected String hasRelatedTenants;
 
     /**
@@ -122,6 +125,30 @@ public class GetDormitoryListRequest {
      */
     public void setDormitoryOwner(String value) {
         this.dormitoryOwner = value;
+    }
+
+    /**
+     * Gets the value of the dormitoryCondition property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDormitoryCondition() {
+        return dormitoryCondition;
+    }
+
+    /**
+     * Sets the value of the dormitoryCondition property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDormitoryCondition(String value) {
+        this.dormitoryCondition = value;
     }
 
     /**

@@ -45,6 +45,8 @@ public class DormitoryWebService1 {
     static HashMap<BigInteger, DormitoryType> addDormitoryMap = new HashMap();
     static HashMap<BigInteger, DormitoryTenantType> addDormitoryTenantMap = new HashMap();
 
+    
+
     public TenantType getTenant(GetTenantRequest parameter) {
         TenantType tenant = null;
         if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd")) {
@@ -230,7 +232,13 @@ public class DormitoryWebService1 {
     private static boolean dormitoryParametersMatch(GetDormitoryListRequest parameter, DormitoryType dt) {
         return administrativeAreasMatch(parameter, dt)
                 && ownersMatch(parameter, dt)
-                && hasRelatedTenantsMatch(parameter, dt);
+                && hasRelatedTenantsMatch(parameter, dt)
+                && conditionsMatch(parameter, dt);
+    }
+    
+    private static boolean conditionsMatch(GetDormitoryListRequest parameter, DormitoryType dt) {
+        return parameter.getDormitoryCondition() == null
+                || parameter.getDormitoryCondition().equalsIgnoreCase(dt.getDormitoryCondition());
     }
 
     private static boolean hasRelatedTenantsMatch(GetDormitoryListRequest parameter, DormitoryType dt) {
@@ -242,7 +250,8 @@ public class DormitoryWebService1 {
     }
 
     private static boolean ownersMatch(GetDormitoryListRequest parameter, DormitoryType dt) {
-        return parameter.getDormitoryOwner() == null || (parameter.getDormitoryOwner().equalsIgnoreCase(dt.getDormitoryOwner()));
+        return parameter.getDormitoryOwner() == null 
+                || (parameter.getDormitoryOwner().equalsIgnoreCase(dt.getDormitoryOwner()));
     }
 
     private static boolean administrativeAreasMatch(GetDormitoryListRequest parameter, DormitoryType dt) {

@@ -59,12 +59,14 @@ public class DormitoriesResource {
     public GetDormitoryListResponse getDormitoryList(@QueryParam("token") String token,
             @QueryParam("area") String administrativeArea,
             @QueryParam("owner") String dormitoryOwner,
+            @QueryParam("condition") String dormitoryCondition,
             @QueryParam("tenants") String hasRelatedTenants) {
         DormitoryWebService1 ws = new DormitoryWebService1();
         GetDormitoryListRequest request = new GetDormitoryListRequest();
         request.setToken(token);
         request.setAdministrativeArea(administrativeArea);
         request.setDormitoryOwner(dormitoryOwner);
+        request.setDormitoryCondition(dormitoryCondition);
         request.setHasRelatedTenants(hasRelatedTenants);
         return ws.getDormitoryList(request);
     }
@@ -93,11 +95,11 @@ public class DormitoriesResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public AddDormitoryResponse addDormitory(AddDormitoryRequest content, 
-            //@QueryParam("requestCode") int requestCode,
+            @QueryParam("requestCode") int requestCode,
             @QueryParam("token") String token) {
         DormitoryWebService1 ws = new DormitoryWebService1();
         AddDormitoryRequest request = new AddDormitoryRequest();
-        request.setRequestCode(content.getRequestCode());
+        request.setRequestCode(BigInteger.valueOf(requestCode));
         request.setToken(token);
         request.setAdministrativeArea(content.getAdministrativeArea());
         request.setDormitoryAddress(content.getDormitoryAddress());

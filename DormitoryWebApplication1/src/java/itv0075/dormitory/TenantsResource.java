@@ -94,7 +94,6 @@ public class TenantsResource {
         AddTenantRequest request = new AddTenantRequest();
         request.setRequestCode(BigInteger.valueOf(requestCode)); //TODO: breaks the service
         request.setToken(token);
-        //request.setRequestCode(content.getRequestCode());
         request.setFirstName(content.getFirstName());
         request.setLastName(content.getLastName());
         request.setIdCode(content.getIdCode());

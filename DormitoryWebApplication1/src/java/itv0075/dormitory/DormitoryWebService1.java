@@ -182,7 +182,9 @@ public class DormitoryWebService1 {
 
                 if (getTenant(tenantRequest) != null) {
                     dormitoryTenant.setTenant(getTenant(tenantRequest));
+                    System.out.println("Parameter startDate: " + parameter.getStartDate());
                     dormitoryTenant.setStartDate(parameter.getStartDate());
+                    System.out.println("dt startDate: " + dormitoryTenant.getStartDate());
                     dormitoryTenant.setEndDate(parameter.getEndDate());
                     dormitoryTenant.setStatus(parameter.getStatus());
 

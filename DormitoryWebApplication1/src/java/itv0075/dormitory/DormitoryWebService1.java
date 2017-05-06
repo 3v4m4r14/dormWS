@@ -63,7 +63,7 @@ public class DormitoryWebService1 {
         AddTenantResponse response = new AddTenantResponse();
         TenantType tenant = new TenantType();
 
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd")) {
+        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd") && parameter.getRequestCode() != null) {
 
             response.setResponseCode(parameter.getRequestCode());
 
@@ -113,7 +113,7 @@ public class DormitoryWebService1 {
     public AddDormitoryResponse addDormitory(AddDormitoryRequest parameter) {
         AddDormitoryResponse response = new AddDormitoryResponse();
         DormitoryType dormitory = new DormitoryType();
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd")) {
+        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd") && parameter.getRequestCode() != null) {
 
             response.setResponseCode(parameter.getRequestCode());
 
@@ -167,7 +167,7 @@ public class DormitoryWebService1 {
         AddDormitoryTenantResponse response = new AddDormitoryTenantResponse();
         DormitoryTenantType dormitoryTenant = new DormitoryTenantType();
 
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd")) {
+        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd") && parameter.getRequestCode() != null) {
 
             response.setResponseCode(parameter.getRequestCode());
 

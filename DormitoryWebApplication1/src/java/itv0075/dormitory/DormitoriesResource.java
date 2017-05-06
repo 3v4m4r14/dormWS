@@ -32,6 +32,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.xml.datatype.DatatypeFactory;
 
 /**
  * REST Web Service
@@ -119,13 +120,17 @@ public class DormitoriesResource {
     @Produces(MediaType.APPLICATION_JSON)
     public AddDormitoryTenantResponse addDormitoryTenant(AddDormitoryTenantRequest content, 
                                         @QueryParam("token") String token,
+                                        @QueryParam("requestCode") int requestCode,
                                         @PathParam("id") String id) {
         DormitoryWebService1 ws = new DormitoryWebService1();
         AddDormitoryTenantRequest request = new AddDormitoryTenantRequest();
         request.setToken(token);
-        request.setRequestCode(content.getRequestCode());
-        request.setDormitoryId(BigInteger.valueOf(Integer.parseInt(id))); //TODO: dorm id is in content already
+        request.setRequestCode(BigInteger.valueOf(requestCode));
+        request.setDormitoryId(BigInteger.valueOf(Integer.parseInt(id)));
         request.setTenantId(content.getTenantId());
+        
+        //TODO date format, not in seconds
+        
         request.setStartDate(content.getStartDate());
         request.setEndDate(content.getEndDate());
         request.setStatus(content.getStatus());

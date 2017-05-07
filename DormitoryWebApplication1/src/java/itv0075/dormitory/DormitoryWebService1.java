@@ -38,6 +38,7 @@ import javax.jws.WebService;
 @SchemaValidation
 public class DormitoryWebService1 {
 
+    private static final String API_TOKEN = "asd";
     static int nextDormitoryId = 1;
     static int nextTenantId = 1;
     static List<DormitoryType> dormitoryList = new ArrayList<DormitoryType>();
@@ -46,23 +47,25 @@ public class DormitoryWebService1 {
     static HashMap<BigInteger, DormitoryType> addDormitoryMap = new HashMap();
     static HashMap<BigInteger, DormitoryTenantType> addDormitoryTenantMap = new HashMap();
 
-    public TenantType getTenant(GetTenantRequest parameter) {
+    public TenantType getTenant(GetTenantRequest parameter) throws InvalidTokenException {
         TenantType tenant = null;
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd")) {
+        if (API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
             for (TenantType t : tenantList) {
                 if (t.getId().equals(parameter.getId())) {
                     tenant = t;
                 }
             }
+        } else {
+            throw new InvalidTokenException("Invalid token.");
         }
         return tenant;
     }
 
-    public AddTenantResponse addTenant(AddTenantRequest parameter) {
+    public AddTenantResponse addTenant(AddTenantRequest parameter) throws InvalidTokenException {
         AddTenantResponse response = new AddTenantResponse();
         TenantType tenant = new TenantType();
 
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd") && parameter.getRequestCode() != null) {
+        if (API_TOKEN.equalsIgnoreCase(parameter.getToken()) && parameter.getRequestCode() != null) {
 
             response.setResponseCode(parameter.getRequestCode());
 
@@ -80,39 +83,45 @@ public class DormitoryWebService1 {
                 addTenantMap.put(parameter.getRequestCode(), tenant);
                 response.setTenant(tenant);
             }
+        } else {
+            throw new InvalidTokenException("Invalid token.");
         }
 
         return response;
     }
 
-    public GetTenantListResponse getTenantList(GetTenantListRequest parameter) {
+    public GetTenantListResponse getTenantList(GetTenantListRequest parameter) throws InvalidTokenException {
         GetTenantListResponse tenants = new GetTenantListResponse();
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd")) {
+        if (API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
             for (TenantType tenant : tenantList) {
                 if (tenantParametersMatch(parameter, tenant)) {
                     tenants.getTenant().add(tenant);
                 }
             }
+        } else {
+            throw new InvalidTokenException("Invalid token.");
         }
         return tenants;
     }
 
-    public DormitoryType getDormitory(GetDormitoryRequest parameter) {
+    public DormitoryType getDormitory(GetDormitoryRequest parameter) throws InvalidTokenException {
         DormitoryType response = null;
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd")) {
+        if (API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
             for (DormitoryType dormitory : dormitoryList) {
                 if (dormitory.getId().equals(parameter.getId())) {
                     response = dormitory;
                 }
             }
+        } else {
+            throw new InvalidTokenException("Invalid token.");
         }
         return response;
     }
 
-    public AddDormitoryResponse addDormitory(AddDormitoryRequest parameter) {
+    public AddDormitoryResponse addDormitory(AddDormitoryRequest parameter) throws InvalidTokenException {
         AddDormitoryResponse response = new AddDormitoryResponse();
         DormitoryType dormitory = new DormitoryType();
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd") && parameter.getRequestCode() != null) {
+        if (API_TOKEN.equalsIgnoreCase(parameter.getToken()) && parameter.getRequestCode() != null) {
 
             response.setResponseCode(parameter.getRequestCode());
 
@@ -130,49 +139,54 @@ public class DormitoryWebService1 {
                 addDormitoryMap.put(parameter.getRequestCode(), dormitory);
                 response.setDormitory(dormitory);
             }
+        } else {
+            throw new InvalidTokenException("Invalid token.");
         }
         return response;
     }
 
-    public GetDormitoryListResponse getDormitoryList(GetDormitoryListRequest parameter) {
+    public GetDormitoryListResponse getDormitoryList(GetDormitoryListRequest parameter) throws InvalidTokenException {
 
         GetDormitoryListResponse dormitories = new GetDormitoryListResponse();
 
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd")) {
+        if (API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
             for (DormitoryType dormitory : dormitoryList) {
                 if (dormitoryParametersMatch(parameter, dormitory)) {
                     dormitories.getDormitory().add(dormitory);
                 }
             }
+        } else {
+            throw new InvalidTokenException("Invalid token.");
         }
 
         return dormitories;
     }
 
-    public DormitoryTenantListType getDormitoryTenantList(GetDormitoryTenantListRequest parameter) {
+    public DormitoryTenantListType getDormitoryTenantList(GetDormitoryTenantListRequest parameter) throws InvalidTokenException {
         DormitoryTenantListType dormitoryTenants = new DormitoryTenantListType();
 
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd")) {
+        if (API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
             for (DormitoryType dormitory : dormitoryList) {
                 if (parameter.getDormitoryId().equals(dormitory.getId())) {
                     dormitoryTenants = dormitory.getDormitoryTenantList();
                 }
             }
+        } else {
+            throw new InvalidTokenException("Invalid token.");
         }
         return dormitoryTenants;
     }
 
-    public AddDormitoryTenantResponse addDormitoryTenant(AddDormitoryTenantRequest parameter) {
+    public AddDormitoryTenantResponse addDormitoryTenant(AddDormitoryTenantRequest parameter) throws InvalidTokenException {
         AddDormitoryTenantResponse response = new AddDormitoryTenantResponse();
         DormitoryTenantType dormitoryTenant = new DormitoryTenantType();
 
-        if (parameter.getToken() != null && parameter.getToken().equalsIgnoreCase("asd") && parameter.getRequestCode() != null) {
+        if (API_TOKEN.equalsIgnoreCase(parameter.getToken()) && parameter.getRequestCode() != null) {
 
             response.setResponseCode(parameter.getRequestCode());
 
             if (addDormitoryTenantMap.containsKey(parameter.getRequestCode())) {
                 response.setDormitoryTenant(addDormitoryTenantMap.get(parameter.getRequestCode()));
-                System.out.println("On listis");
             } else {
 
                 GetTenantRequest tenantRequest = new GetTenantRequest();
@@ -181,9 +195,7 @@ public class DormitoryWebService1 {
 
                 if (getTenant(tenantRequest) != null) {
                     dormitoryTenant.setTenant(getTenant(tenantRequest));
-                    System.out.println("Parameter startDate: " + parameter.getStartDate());
                     dormitoryTenant.setStartDate(parameter.getStartDate());
-                    System.out.println("dt startDate: " + dormitoryTenant.getStartDate());
                     dormitoryTenant.setEndDate(parameter.getEndDate());
                     dormitoryTenant.setStatus(parameter.getStatus());
 
@@ -193,12 +205,13 @@ public class DormitoryWebService1 {
                             dormitory.getDormitoryTenantList().getDormitoryTenant().add(dormitoryTenant);
                             addDormitoryTenantMap.put(parameter.getRequestCode(), dormitoryTenant);
                             response.setDormitoryTenant(dormitoryTenant);
-                            System.out.println("Pole listis");
                         }
                     }
                 }
             }
-        }        
+        } else {
+            throw new InvalidTokenException("Invalid token.");
+        }
         return response;
     }
 

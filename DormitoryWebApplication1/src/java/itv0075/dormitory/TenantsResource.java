@@ -52,7 +52,7 @@ public class TenantsResource {
             @QueryParam("lastName") String lastName,
             @QueryParam("gender") String gender,
             @QueryParam("status") String studentStatus,
-            @QueryParam("university") String university) {
+            @QueryParam("university") String university) throws InvalidTokenException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         GetTenantListRequest request = new GetTenantListRequest();
         request.setToken(token);
@@ -72,7 +72,7 @@ public class TenantsResource {
     @Path("{id : \\d+}") //digits only
     @Produces(MediaType.APPLICATION_JSON)
     public TenantType getTenant(@PathParam("id") String id,
-            @QueryParam("token") String token) {
+            @QueryParam("token") String token) throws InvalidTokenException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         GetTenantRequest request = new GetTenantRequest();
         request.setId(BigInteger.valueOf(Integer.parseInt(id)));
@@ -89,7 +89,7 @@ public class TenantsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public AddTenantResponse addTenant(AddTenantRequest content, 
             @QueryParam("requestCode") int requestCode,
-            @QueryParam("token") String token) {
+            @QueryParam("token") String token) throws InvalidTokenException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         AddTenantRequest request = new AddTenantRequest();
         request.setRequestCode(BigInteger.valueOf(requestCode)); //TODO: breaks the service

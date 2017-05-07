@@ -61,7 +61,7 @@ public class DormitoriesResource {
             @QueryParam("area") String administrativeArea,
             @QueryParam("owner") String dormitoryOwner,
             @QueryParam("condition") String dormitoryCondition,
-            @QueryParam("tenants") String hasRelatedTenants) {
+            @QueryParam("tenants") String hasRelatedTenants) throws InvalidTokenException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         GetDormitoryListRequest request = new GetDormitoryListRequest();
         request.setToken(token);
@@ -80,7 +80,7 @@ public class DormitoriesResource {
     @Path("{id : \\d+}") //digits only
     @Produces(MediaType.APPLICATION_JSON)
     public DormitoryType getDormitory(@PathParam("id") String id,
-            @QueryParam("token") String token) {
+            @QueryParam("token") String token) throws InvalidTokenException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         GetDormitoryRequest request = new GetDormitoryRequest();
         request.setId(BigInteger.valueOf(Integer.parseInt(id)));
@@ -97,7 +97,7 @@ public class DormitoriesResource {
     @Produces(MediaType.APPLICATION_JSON)
     public AddDormitoryResponse addDormitory(AddDormitoryRequest content, 
             @QueryParam("requestCode") int requestCode,
-            @QueryParam("token") String token) {
+            @QueryParam("token") String token) throws InvalidTokenException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         AddDormitoryRequest request = new AddDormitoryRequest();
         request.setRequestCode(BigInteger.valueOf(requestCode));
@@ -121,7 +121,7 @@ public class DormitoriesResource {
     public AddDormitoryTenantResponse addDormitoryTenant(AddDormitoryTenantRequest content, 
                                         @QueryParam("token") String token,
                                         @QueryParam("requestCode") int requestCode,
-                                        @PathParam("id") String id) {
+                                        @PathParam("id") String id) throws InvalidTokenException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         AddDormitoryTenantRequest request = new AddDormitoryTenantRequest();
         request.setToken(token);
@@ -147,7 +147,7 @@ public class DormitoriesResource {
     @Path("{id : \\d+}/tenants") //digits only
     @Produces(MediaType.APPLICATION_JSON)
     public DormitoryTenantListType getDormitoryTenantList(@PathParam("id") String id,
-            @QueryParam("token") String token) {
+            @QueryParam("token") String token) throws InvalidTokenException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         GetDormitoryTenantListRequest request = new GetDormitoryTenantListRequest();
         request.setDormitoryId(BigInteger.valueOf(Integer.parseInt(id)));

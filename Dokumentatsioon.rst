@@ -2,7 +2,11 @@
 DormitoryService API dokumentatsioon
 ====================================
 
-**DormitoryService API** võimaldab lisada ja pärida andmeid ühiselamu teenuselt. Teenuse kasutajaks on ühiselamute ja nende elanike haldajad. Ülemressursiks on dormitory *(ühiselamu)* nind selle alamressursiks tenant *(elanik)*.
+:Autor: Eva Maria Veitmaa
+:Loomise aeg: 07/05/2017
+:Aine: Veebiteenused IDU0075, Tallinna Tehnikaülikool
+
+**DormitoryService API** võimaldab lisada ja pärida andmeid ühiselamu teenuselt. Teenuse kasutajaks on ühiselamute töötajad, ühiselamute ja nende elanike haldajad. Ülemressursiks on dormitory *(ühiselamu)* nind selle alamressursiks tenant *(elanik)*.
 
 Kõikidele klientidele on väljastatud ühine **token**, mis kehtib mõlema API puhul ning tuleb kaasa anda igale päringule. Vale tokeni korral väljastatakse veateade ning operatsioon ei õnnestu.
 

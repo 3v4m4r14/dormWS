@@ -1,0 +1,378 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/dormitory" targetNamespace="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+    <wsdl:types>
+        <xs:schema targetNamespace="http://www.ttu.ee/idu0075/2015/ws/dormitory" elementFormDefault="qualified">
+
+            <xs:simpleType name="idCodeType">
+                <xs:restriction base="xs:integer">
+                    <xs:totalDigits value="11"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:simpleType name="statusType">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="active|inactive"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:simpleType name="genderType">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="male|female|other"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:simpleType name="dormitoryConditionType">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="renovated|new|old"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:complexType name="tenantType">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:integer"/>
+                    <xs:element name="firstName" type="xs:string"/>
+                    <xs:element name="lastName" type="xs:string"/>
+                    <xs:element name="idCode" type="tns:idCodeType"/>
+                    <xs:element name="gender" type="tns:genderType"/>
+                    <xs:element name="studentStatus" type="tns:statusType"/>
+                    <xs:element name="university" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="dormitoryTenantType">
+                <xs:sequence>
+                    <xs:element name="tenant" type="tns:tenantType"/>
+                    <xs:element name="startDate" type="xs:date"/>
+                    <xs:element name="endDate" type="xs:date"/>
+                    <xs:element name="status" type="tns:statusType"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="dormitoryTenantListType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="dormitoryTenant" type="tns:dormitoryTenantType"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="dormitoryType">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:integer"/>
+                    <xs:element name="administrativeArea" type="xs:string"/>
+                    <xs:element name="dormitoryAddress" type="xs:string"/>
+                    <xs:element name="dormitoryCapacity" type="xs:integer"/>
+                    <xs:element name="dormitoryOwner" type="xs:string"/>
+                    <xs:element name="dormitoryCondition" type="tns:dormitoryConditionType"/>
+                    <xs:element name="dormitoryTenantList" type="tns:dormitoryTenantListType"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="getTenantRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="token" type="xs:string"/>
+                        <xs:element name="id" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getTenantResponse" type="tns:tenantType"/>
+
+            <xs:element name="addTenantRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="token" type="xs:string"/>
+                        <xs:element name="requestCode" type="xs:integer"/>
+                        <xs:element name="firstName" type="xs:string"/>
+                        <xs:element name="lastName" type="xs:string"/>
+                        <xs:element name="idCode" type="tns:idCodeType"/>
+                        <xs:element name="gender" type="tns:genderType"/>
+                        <xs:element name="studentStatus" type="tns:statusType"/>
+                        <xs:element name="university" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="addTenantResponse">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="responseCode" type="xs:integer"/>
+                            <xs:element name="tenant" type="tns:tenantType"/>
+                        </xs:sequence>
+                    </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getTenantListRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="token" type="xs:string"/>
+                        <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+                        <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+                        <xs:element minOccurs="0" name="gender" type="tns:genderType"/>
+                        <xs:element minOccurs="0" name="studentStatus" type="tns:statusType"/>
+                        <xs:element minOccurs="0" name="university" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getTenantListResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="unbounded" name="tenant" type="tns:tenantType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getDormitoryRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="token" type="xs:string"/>
+                        <xs:element name="id" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getDormitoryResponse" type="tns:dormitoryType"/>
+
+            <xs:element name="addDormitoryRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="token" type="xs:string"/>
+                        <xs:element name="requestCode" type="xs:integer"/>
+                        <xs:element name="administrativeArea" type="xs:string"/>
+                        <xs:element name="dormitoryAddress" type="xs:string"/>
+                        <xs:element name="dormitoryCapacity" type="xs:integer"/>
+                        <xs:element name="dormitoryOwner" type="xs:string"/>
+                        <xs:element name="dormitoryCondition" type="tns:dormitoryConditionType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="addDormitoryResponse">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="responseCode" type="xs:integer"/>
+                            <xs:element name="dormitory" type="tns:dormitoryType"/>
+                        </xs:sequence>
+                    </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getDormitoryListRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="token" type="xs:string"/>
+                        <xs:element minOccurs="0" name="administrativeArea" type="xs:string"/>
+                        <xs:element minOccurs="0" name="dormitoryOwner" type="xs:string"/>
+                        <xs:element minOccurs="0" name="dormitoryCondition" type="tns:dormitoryConditionType"/>
+                        <xs:element minOccurs="0" name="hasRelatedTenants">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:pattern value="yes|no"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getDormitoryListResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="unbounded" name="dormitory" type="tns:dormitoryType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getDormitoryTenantListRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="token" type="xs:string"/>
+                        <xs:element name="dormitoryId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getDormitoryTenantListResponse" type="tns:dormitoryTenantListType"/>
+
+            <xs:element name="addDormitoryTenantRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="token" type="xs:string"/>
+                        <xs:element name="requestCode" type="xs:integer"/>
+                        <xs:element name="dormitoryId" type="xs:integer"/>
+                        <xs:element name="tenantId" type="xs:integer"/>
+                        <xs:element name="startDate" type="xs:date"/>
+                        <xs:element name="endDate" type="xs:date"/>
+                        <xs:element name="status" type="tns:statusType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="addDormitoryTenantResponse">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="responseCode" type="xs:integer"/>
+                            <xs:element name="dormitoryTenant" type="tns:dormitoryTenantType"/>
+                        </xs:sequence>
+                    </xs:complexType>
+            </xs:element>
+
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name="getTenantMessageRequest">
+        <wsdl:part name="parameter" element="tns:getTenantRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getTenantMessageResponse">
+        <wsdl:part name="parameter" element="tns:getTenantResponse"/>
+    </wsdl:message>
+    <wsdl:message name="addTenantMessageRequest">
+        <wsdl:part name="parameter" element="tns:addTenantRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addTenantMessageResponse">
+        <wsdl:part name="parameter" element="tns:addTenantResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getTenantListMessageRequest">
+        <wsdl:part name="parameter" element="tns:getTenantListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getTenantListMessageResponse">
+        <wsdl:part name="parameter" element="tns:getTenantListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getDormitoryMessageRequest">
+        <wsdl:part name="parameter" element="tns:getDormitoryRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getDormitoryMessageResponse">
+        <wsdl:part name="parameter" element="tns:getDormitoryResponse"/>
+    </wsdl:message>
+    <wsdl:message name="addDormitoryMessageRequest">
+        <wsdl:part name="parameter" element="tns:addDormitoryRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addDormitoryMessageResponse">
+        <wsdl:part name="parameter" element="tns:addDormitoryResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getDormitoryListMessageRequest">
+        <wsdl:part name="parameter" element="tns:getDormitoryListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getDormitoryListMessageResponse">
+        <wsdl:part name="parameter" element="tns:getDormitoryListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getDormitoryTenantListMessageRequest">
+        <wsdl:part name="parameter" element="tns:getDormitoryTenantListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getDormitoryTenantListMessageResponse">
+        <wsdl:part name="parameter" element="tns:getDormitoryTenantListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="addDormitoryTenantMessageRequest">
+        <wsdl:part name="parameter" element="tns:addDormitoryTenantRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addDormitoryTenantMessageResponse">
+        <wsdl:part name="parameter" element="tns:addDormitoryTenantResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="dormitoryPortType">
+        <wsdl:operation name="getTenant">
+            <wsdl:input message="tns:getTenantMessageRequest"/>
+            <wsdl:output message="tns:getTenantMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="addTenant">
+            <wsdl:input message="tns:addTenantMessageRequest"/>
+            <wsdl:output message="tns:addTenantMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getTenantList">
+            <wsdl:input message="tns:getTenantListMessageRequest"/>
+            <wsdl:output message="tns:getTenantListMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDormitory">
+            <wsdl:input message="tns:getDormitoryMessageRequest"/>
+            <wsdl:output message="tns:getDormitoryMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="addDormitory">
+            <wsdl:input message="tns:addDormitoryMessageRequest"/>
+            <wsdl:output message="tns:addDormitoryMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDormitoryList">
+            <wsdl:input message="tns:getDormitoryListMessageRequest"/>
+            <wsdl:output message="tns:getDormitoryListMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDormitoryTenantList">
+            <wsdl:input message="tns:getDormitoryTenantListMessageRequest"/>
+            <wsdl:output message="tns:getDormitoryTenantListMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="addDormitoryTenant">
+            <wsdl:input message="tns:addDormitoryTenantMessageRequest"/>
+            <wsdl:output message="tns:addDormitoryTenantMessageResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="dormitoryBinding" type="tns:dormitoryPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getTenant">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addTenant">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getTenantList">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getDormitory">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addDormitory">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getDormitoryList">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getDormitoryTenantList">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addDormitoryTenant">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="dormitoryService1">
+        <wsdl:port name="dormitoryPort" binding="tns:dormitoryBinding">
+            <soap:address location="http://localhost:8080/DormitoryWebApplication1/dormitoryService1"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

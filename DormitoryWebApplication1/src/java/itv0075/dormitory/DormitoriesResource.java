@@ -37,7 +37,7 @@ import javax.xml.datatype.DatatypeFactory;
 /**
  * REST Web Service
  *
- * @author emvei
+ * @author Eva Maria Veitmaa
  */
 @Path("dormitories")
 public class DormitoriesResource {
@@ -52,8 +52,8 @@ public class DormitoriesResource {
     }
 
     /**
-     * Retrieves representation of an instance of itv0075.dormitory.DormitoriesResource
-     * @return an instance of ee.ttu.idu0075._2015.ws.dormitory.DormitoryType
+     * Retrieves representation of an instance of ee.ttu.idu0075._2015.ws.dormitory.DormitoryListResource
+     * @return an instance of ee.ttu.idu0075._2015.ws.dormitory.GetDormitoryListResponse
      */
     @GET
     @Produces(MediaType.APPLICATION_XML)
@@ -73,7 +73,7 @@ public class DormitoriesResource {
     }
 
     /**
-     * Retrieves representation of an instance of dormitory.DormitoriesResource
+     * Retrieves representation of an instance of dormitory.DormitoryResource
      * @return an instance of ee.ttu.idu0075._2015.ws.dormitory.DormitoryType
      */
     @GET
@@ -141,7 +141,7 @@ public class DormitoriesResource {
     
     /**
      * Retrieves representation of an instance of dormitory.DormitoryTenantListResource
-     * @return an instance of ee.ttu.idu0075._2015.ws.dormitory.GetDormitoryTenantListResponse
+     * @return an instance of ee.ttu.idu0075._2015.ws.dormitory.DormitoryTenantListType
      */
     @GET
     @Path("{id : \\d+}/tenants") //digits only

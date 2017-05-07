@@ -11,8 +11,9 @@ import java.util.logging.Logger;
 import javax.ws.rs.core.Application;
 
 /**
- *
- * @author emvei
+ * REST service helper class.
+ * 
+ * @author Eva Maria Veitmaa
  */
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {

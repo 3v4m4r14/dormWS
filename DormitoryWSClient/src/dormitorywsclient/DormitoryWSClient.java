@@ -12,8 +12,9 @@ import ee.ttu.idu0075._2015.ws.dormitory.GetDormitoryRequest;
 import java.math.BigInteger;
 
 /**
- *
- * @author emvei
+ * Client application for Dormitory Web Service.
+ * 
+ * @author Eva Maria Veitmaa
  */
 public class DormitoryWSClient {
 
@@ -51,6 +52,4 @@ public class DormitoryWSClient {
         ee.ttu.idu0075._2015.ws.dormitory.DormitoryPortType port = service.getDormitoryPort();
         return port.getDormitory(parameter);
     }
-
-    
 }

@@ -27,7 +27,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * REST Web Service
  *
- * @author emvei
+ * @author Eva Maria Veitmaa
  */
 @Path("tenants")
 public class TenantsResource {
@@ -43,7 +43,7 @@ public class TenantsResource {
 
     /**
      * Retrieves representation of an instance of dormitory.TenantsResource
-     * @return an instance of ee.ttu.idu0075._2015.ws.dormitory.TenantType
+     * @return an instance of ee.ttu.idu0075._2015.ws.dormitory.GetTenantListResponse
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -30,8 +30,9 @@ import java.util.List;
 import javax.jws.WebService;
 
 /**
- *
- * @author emvei
+ * Web Service
+ * 
+ * @author Eva Maria Veitmaa
  */
 @WebService(serviceName = "dormitoryService1", portName = "dormitoryPort", endpointInterface = "ee.ttu.idu0075._2015.ws.dormitory.DormitoryPortType", targetNamespace = "http://www.ttu.ee/idu0075/2015/ws/dormitory", wsdlLocation = "WEB-INF/wsdl/DormitoryService1/dormitoryService.wsdl")
 @SchemaValidation
@@ -44,8 +45,6 @@ public class DormitoryWebService1 {
     static HashMap<BigInteger, TenantType> addTenantMap = new HashMap();
     static HashMap<BigInteger, DormitoryType> addDormitoryMap = new HashMap();
     static HashMap<BigInteger, DormitoryTenantType> addDormitoryTenantMap = new HashMap();
-
-    
 
     public TenantType getTenant(GetTenantRequest parameter) {
         TenantType tenant = null;

@@ -32,6 +32,12 @@
                 </xs:restriction>
             </xs:simpleType>
 
+            <xs:simpleType name="hasRelatedTenantsType">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="yes|no"/>
+                </xs:restriction>
+            </xs:simpleType>
+
             <xs:complexType name="tenantType">
                 <xs:sequence>
                     <xs:element name="id" type="xs:integer"/>
@@ -99,12 +105,12 @@
             </xs:element>
 
             <xs:element name="addTenantResponse">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="responseCode" type="xs:integer"/>
-                            <xs:element name="tenant" type="tns:tenantType"/>
-                        </xs:sequence>
-                    </xs:complexType>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="responseCode" type="xs:integer"/>
+                        <xs:element name="tenant" type="tns:tenantType"/>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
 
             <xs:element name="getTenantListRequest">
@@ -154,12 +160,12 @@
             </xs:element>
 
             <xs:element name="addDormitoryResponse">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="responseCode" type="xs:integer"/>
-                            <xs:element name="dormitory" type="tns:dormitoryType"/>
-                        </xs:sequence>
-                    </xs:complexType>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="responseCode" type="xs:integer"/>
+                        <xs:element name="dormitory" type="tns:dormitoryType"/>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
 
             <xs:element name="getDormitoryListRequest">
@@ -169,13 +175,7 @@
                         <xs:element minOccurs="0" name="administrativeArea" type="xs:string"/>
                         <xs:element minOccurs="0" name="dormitoryOwner" type="xs:string"/>
                         <xs:element minOccurs="0" name="dormitoryCondition" type="tns:dormitoryConditionType"/>
-                        <xs:element minOccurs="0" name="hasRelatedTenants">
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:pattern value="yes|no"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
+                        <xs:element minOccurs="0" name="hasRelatedTenants" type="tns:hasRelatedTenantsType"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -214,12 +214,12 @@
             </xs:element>
 
             <xs:element name="addDormitoryTenantResponse">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="responseCode" type="xs:integer"/>
-                            <xs:element name="dormitoryTenant" type="tns:dormitoryTenantType"/>
-                        </xs:sequence>
-                    </xs:complexType>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="responseCode" type="xs:integer"/>
+                        <xs:element name="dormitoryTenant" type="tns:dormitoryTenantType"/>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
 
         </xs:schema>

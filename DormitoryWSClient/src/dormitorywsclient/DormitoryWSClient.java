@@ -33,7 +33,11 @@ public class DormitoryWSClient {
         addDormReq.setDormitoryOwner("TTU");
         addDormReq.setDormitoryCondition("old");
         
-        addDormitory(addDormReq);
+        try {
+            addDormitory(addDormReq);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
       
         GetDormitoryRequest getDormReq = new GetDormitoryRequest();
         getDormReq.setToken(token);

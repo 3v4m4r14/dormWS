@@ -92,7 +92,7 @@ public class TenantsResource {
             @QueryParam("token") String token) throws InvalidTokenException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         AddTenantRequest request = new AddTenantRequest();
-        request.setRequestCode(BigInteger.valueOf(requestCode)); //TODO: breaks the service
+        request.setRequestCode(BigInteger.valueOf(requestCode));
         request.setToken(token);
         request.setFirstName(content.getFirstName());
         request.setLastName(content.getLastName());

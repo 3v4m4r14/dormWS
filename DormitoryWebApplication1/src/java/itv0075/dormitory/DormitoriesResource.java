@@ -128,12 +128,7 @@ public class DormitoriesResource {
         request.setRequestCode(BigInteger.valueOf(requestCode));
         request.setDormitoryId(BigInteger.valueOf(Integer.parseInt(id)));
         request.setTenantId(content.getTenantId());
-        
-        //TODO date format, not in seconds
-        System.out.println("Content startDate in REST: " + content.getStartDate());
-        
         request.setStartDate(content.getStartDate());
-        System.out.println("Request startDate in REST: " + request.getStartDate());
         request.setEndDate(content.getEndDate());
         request.setStatus(content.getStatus());
         return ws.addDormitoryTenant(request);

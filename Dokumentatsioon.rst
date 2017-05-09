@@ -406,11 +406,129 @@ Operatsioon kõigi elanike nimekirja küsimiseks.
        </S:Body>
     </S:Envelope>
 
+addDormitoryTenant
+------------------
 
+Operatsioon elaniku lisamiseks ühiselamu nimekirja.
 
+**Sisend:** addDormitoryTenantRequest
 
+- **token** string. Kliendi autentimiseks kasutatav kood ehk *token*.
+- **requestCode** integer. Päringu unikaalne identifikaator.
+- **dormitoryId** integer. Viide ühiselamule, mille nimekirja elanik lisatakse.
+- **tenantId** integer. Viide elanikule, kes vaadeldava ühiselamu nimekirja lisatakse.
+- **startDate** date. Kuupäev, millest alates elanik ühiselamu nimekirja kuulub ehk lepingu alguskuupäev.
+- **endDate** date. Kuupäev, millest alates elanik ühiselamu nimekirja enam ei kuulu ehk lepingu lõpukuupäev.
+- **status** statusType. Kas leping on kehtiv või mitte.
 
+.. code-block:: xml
 
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <dor:addDormitoryTenantRequest>
+             <dor:token>asd</dor:token>
+             <dor:requestCode>1</dor:requestCode>
+             <dor:dormitoryId>1</dor:dormitoryId>
+             <dor:tenantId>1</dor:tenantId>
+             <dor:startDate>2015-08-16</dor:startDate>
+             <dor:endDate>2017-06-10</dor:endDate>
+             <dor:status>active</dor:status>
+          </dor:addDormitoryTenantRequest>
+       </soapenv:Body>
+    </soapenv:Envelope>
+
+**Väljund:** addDormitoryTenantResponse
+
+- **responseCode** integer. Päringust saadud unikaalne identifikaator, kontrollimaks *Idempotent Capability* mustrit.
+- **dormitoryTenant** dormitoryTenantType. Viide vaadeldavale ühiselamule ja lisatud elanikule. Sisaldab elaniku ja päringus antud andmeid.
+
+.. code-block:: xml
+
+    <S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+       <S:Body>
+          <addDormitoryTenantResponse xmlns="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+             <responseCode>1</responseCode>
+             <dormitoryTenant>
+                <tenant>
+                   <id>1</id>
+                   <firstName>Eva Maria</firstName>
+                   <lastName>Veitmaa</lastName>
+                   <idCode>49606064219</idCode>
+                   <gender>female</gender>
+                   <studentStatus>active</studentStatus>
+                   <university>TTU</university>
+                </tenant>
+                <startDate>2015-08-16</startDate>
+                <endDate>2017-06-10</endDate>
+                <status>active</status>
+             </dormitoryTenant>
+          </addDormitoryTenantResponse>
+       </S:Body>
+    </S:Envelope>
+
+getDormitoryTenant
+------------------
+
+Operatsioon ühele ühiselamuga seotud elanike nimekirja küsimiseks.
+
+**Sisend:** getDormitoryTenantListRequest
+
+- **token** string. Kliendi autentimiseks kasutatav kood ehk *token*.
+- **dormitoryId** integer. Ühiselamu unikaalne identifikaator.
+
+.. code-block:: xml
+
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dor="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <dor:getDormitoryTenantListRequest>
+             <dor:token>asd</dor:token>
+             <dor:dormitoryId>1</dor:dormitoryId>
+          </dor:getDormitoryTenantListRequest>
+       </soapenv:Body>
+    </soapenv:Envelope>
+
+**Väljund:** getDormitoryTenantListResponse
+
+- **getDormitoryTenantListResponse** dormitoryTenantListType. *(0 või rohkem)* Elanik, kes on süsteemis registreeritud, omab **id** väärtust ja on vaadeldava ühiselamu nimekirjas.
+
+.. code-block:: xml
+
+    <S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+       <S:Body>
+          <getDormitoryTenantListResponse xmlns="http://www.ttu.ee/idu0075/2015/ws/dormitory">
+             <dormitoryTenant>
+                <tenant>
+                   <id>1</id>
+                   <firstName>Eva Maria</firstName>
+                   <lastName>Veitmaa</lastName>
+                   <idCode>49606064219</idCode>
+                   <gender>female</gender>
+                   <studentStatus>active</studentStatus>
+                   <university>TTU</university>
+                </tenant>
+                <startDate>2015-08-16</startDate>
+                <endDate>2017-06-10</endDate>
+                <status>active</status>
+             </dormitoryTenant>
+             <dormitoryTenant>
+                <tenant>
+                   <id>2</id>
+                   <firstName>John</firstName>
+                   <lastName>Smith</lastName>
+                   <idCode>39211040028</idCode>
+                   <gender>male</gender>
+                   <studentStatus>active</studentStatus>
+                   <university>TTU</university>
+                </tenant>
+                <startDate>2014-11-01</startDate>
+                <endDate>2017-06-10</endDate>
+                <status>active</status>
+             </dormitoryTenant>
+          </getDormitoryTenantListResponse>
+       </S:Body>
+    </S:Envelope>
 
 
 

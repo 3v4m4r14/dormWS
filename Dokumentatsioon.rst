@@ -597,7 +597,7 @@ Operatsioon uue ühiselamu lisamiseks.
 
 **Ressurss:** /dormitories
 
-**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/dormitories/?token=asd
+**Näidis URL:** http://dormitory.web.service/DormitoryWebApplication1/webresources/dormitories/?token=asd
 
 **Päringuparameetrid:**
 
@@ -646,7 +646,7 @@ Operatsioon ühe ühiselamu küsimiseks talle määratus ID põhjal.
 
 **Ressurss:** /dormitories/{id}
 
-**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/dormitories/1/?token=asd
+**Näidis URL:** http://dormitory.web.service/DormitoryWebApplication1/webresources/dormitories/1/?token=asd
 
 **Päringuparameetrid:**
 
@@ -710,7 +710,7 @@ Operatsioon ühiselamute nimekirja küsimiseks. Otsingut saab filtreerida asula,
 
 **Ressurss:** /dormitories
 
-**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/dormitories/?token=asd&condition=renovated
+**Näidis URL:** http://dormitory.web.service/DormitoryWebApplication1/webresources/dormitories/?token=asd&condition=renovated
 
 **Päringuparameetrid:**
 
@@ -785,7 +785,7 @@ Operatsioon uue elaniku lisamiseks süsteemi.
 
 **Ressurss:** /tenants
 
-**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/tenants/?token=asd
+**Näidis URL:** http://dormitory.web.service/DormitoryWebApplication1/webresources/tenants/?token=asd
 
 **Päringuparameetrid:**
 
@@ -835,7 +835,7 @@ Operatsioon ühe elaniku küsimiseks talle määratud ID põhjal.
 
 **Ressurss:** /tenants/{id}
 
-**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/tenants/1/?token=asd
+**Näidis URL:** http://dormitory.web.service/DormitoryWebApplication1/webresources/tenants/1/?token=asd
 
 **Päringuparameetrid:**
 
@@ -870,7 +870,7 @@ Operatsioon kõigi elanike nimekirja küsimiseks.
 
 **Ressurss:** /tenants
 
-**Näidis URL:** localhost:8080/DormitoryWebApplication1/webresources/tenants/?token=asd
+**Näidis URL:** http://dormitory.web.service/DormitoryWebApplication1/webresources/tenants/?token=asd
 
 **Päringuparameetrid:**
 
@@ -912,7 +912,7 @@ Operatsioon elaniku lisamiseks ühiselamu nimekirja.
 
 **Ressurss:** /dormitories/{id}/tenants
 
-**Näidis URL:** localhost:8080/DormitoryWebApplication1/webresources/dormitories/1/tenants/?token=asd&requestCode=9
+**Näidis URL:** http://dormitory.web.service/DormitoryWebApplication1/webresources/dormitories/1/tenants/?token=asd&requestCode=9
 
 **Päringuparameetrid:**
 
@@ -965,7 +965,7 @@ Operatsioon ühe ühiselamuga seotud elanike nimekirja küsimiseks.
 
 **Ressurss:** /dormitories/{id}/tenants
 
-**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/dormitories/1/tenants/?token=asd
+**Näidis URL:** http://dormitory.web.service/DormitoryWebApplication1/webresources/dormitories/1/tenants/?token=asd
 
 **Päringuparameetrid:**
 

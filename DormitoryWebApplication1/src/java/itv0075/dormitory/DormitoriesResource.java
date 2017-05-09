@@ -56,7 +56,7 @@ public class DormitoriesResource {
      * @return an instance of ee.ttu.idu0075._2015.ws.dormitory.GetDormitoryListResponse
      */
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public GetDormitoryListResponse getDormitoryList(@QueryParam("token") String token,
             @QueryParam("area") String administrativeArea,
             @QueryParam("owner") String dormitoryOwner,

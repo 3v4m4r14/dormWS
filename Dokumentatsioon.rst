@@ -588,3 +588,440 @@ Kolm põhilist JSON-formaadis objekti:
 - **endDate** date. Üüriperioodi lõpukuupäev.
 - **status** statusType. Üürilepingu staatus. Aktiivne, kui leping on kehtiv, mitteaktiivne, kui leping ei ole kehtiv.
 
+addDormitory
+------------
+
+Operatsioon uue ühiselamu lisamiseks.
+
+**HTTP meetod:** POST
+
+**Ressurss:** /dormitories
+
+**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/dormitories/?token=asd
+
+**Päringuparameetrid:**
+
+- **token:** *(kohustuslik)* Kliendi autentimiseks kasutatav *token*.
+- **requestCode** *(kohustuslik)* Päringu unikaalne identifikaator.
+
+**POST sisend:**
+
+- **addDormitoryRequest** object. *(kohustuslik)* Ühiselamu objekt. **id** ei anta kaasa, sest **id** genereeritakse süsteemi poolt automaatselt.
+
+.. code-block:: json
+
+    {
+    	"administrativeArea": "Kuressaare",
+    	"dormitoryAddress": "Hariduse 13",
+    	"dormitoryCapacity": "30",
+    	"dormitoryOwner": "SYG",
+    	"dormitoryCondition": "old"
+    }
+
+**Väljund:**
+
+- **addDormitoryResponse** objekt. Sisaldab päringus antud requestCode'i ja ühiselamu objekti, millele on seatud **id** väärtus.
+
+.. code-block:: json
+
+    {
+       "responseCode": 9,
+       "dormitory":    {
+          "id": 4,
+          "administrativeArea": "Kuressaare",
+          "dormitoryAddress": "Hariduse 13",
+          "dormitoryCapacity": 30,
+          "dormitoryOwner": "SYG",
+          "dormitoryCondition": "old",
+          "dormitoryTenantList": {"dormitoryTenant": null}
+       }
+    }
+
+getDormitory
+------------
+
+Operatsioon ühe ühiselamu küsimiseks talle määratus ID põhjal.
+
+**HTTP meetod:** GET
+
+**Ressurss:** /dormitories/{id}
+
+**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/dormitories/1/?token=asd
+
+**Päringuparameetrid:**
+
+- **token:** *(kohustuslik)* Kliendi autentimiseks kasutatav *token*.
+
+**Path-parameetrid:**
+
+- **id** *(kohustuslik)* Ühiselamu unikaalne identifikaator.
+
+**Väljund:**
+
+- **dormitoryType** dormitory objekt. Sisaldab ühiselamu objekti, mille **id** võrdub parameetri **id** väärtusega.
+
+.. code-block:: json
+
+    {
+       "id": 1,
+       "administrativeArea": "Tallinn",
+       "dormitoryAddress": "Akadeemia tee 11/2, MustamÃ¤e",
+       "dormitoryCapacity": 240,
+       "dormitoryOwner": "TTU",
+       "dormitoryCondition": "renovated",
+       "dormitoryTenantList": {"dormitoryTenant":    [
+                {
+             "tenant":          {
+                "id": 1,
+                "firstName": "Eva Maria",
+                "lastName": "Veitmaa",
+                "idCode": 49606064219,
+                "gender": "female",
+                "studentStatus": "active",
+                "university": "TTU"
+             },
+             "startDate": 1439672400000,
+             "endDate": 1497042000000,
+             "status": "active"
+          },
+                {
+             "tenant":          {
+                "id": 2,
+                "firstName": "John",
+                "lastName": "Smith",
+                "idCode": 39211040028,
+                "gender": "male",
+                "studentStatus": "active",
+                "university": "TTU"
+             },
+             "startDate": 1414792800000,
+             "endDate": 1497042000000,
+             "status": "active"
+          }
+       ]}
+    }
+
+getDormitoryList
+----------------
+
+Operatsioon ühiselamute nimekirja küsimiseks. Otsingut saab filtreerida asula, omaniku, seisundi ja elanike olemasolu järgi.
+
+**HTTP meetod:** GET
+
+**Ressurss:** /dormitories
+
+**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/dormitories/?token=asd&condition=renovated
+
+**Päringuparameetrid:**
+
+- **token:** *(kohustuslik)* Kliendi autentimiseks kasutatav *token*.
+- **area:** *(mittekohustuslik)* Piirkond, kus ühiselamu asub.
+- **owner:** Ühiselamu omanik.
+- **condition:** Ühiselamu seisukord. Võimalikud väärtused: "old", "new", "renovated".
+- **tenants:** Kas ühiselamu nimekirjas on elanikke või mitte. Võimalikud väärtused: "yes", "no".
+
+**Väljund:**
+
+- **getDormitoryListResponse:** array. *(0 või rohkem)* Sisaldab dormitory objekte, mis sobivad otsingu filtriga.
+
+.. code-block:: json
+
+    {"dormitory": [
+          {
+          "id": 1,
+          "administrativeArea": "Tallinn",
+          "dormitoryAddress": "Akadeemia tee 11/2, MustamÃ¤e",
+          "dormitoryCapacity": 240,
+          "dormitoryOwner": "TTU",
+          "dormitoryCondition": "renovated",
+          "dormitoryTenantList": {"dormitoryTenant":       [
+                      {
+                "tenant":             {
+                   "id": 1,
+                   "firstName": "Eva Maria",
+                   "lastName": "Veitmaa",
+                   "idCode": 49606064219,
+                   "gender": "female",
+                   "studentStatus": "active",
+                   "university": "TTU"
+                },
+                "startDate": 1439672400000,
+                "endDate": 1497042000000,
+                "status": "active"
+             },
+                      {
+                "tenant":             {
+                   "id": 2,
+                   "firstName": "John",
+                   "lastName": "Smith",
+                   "idCode": 39211040028,
+                   "gender": "male",
+                   "studentStatus": "active",
+                   "university": "TTU"
+                },
+                "startDate": 1414792800000,
+                "endDate": 1497042000000,
+                "status": "active"
+             }
+          ]}
+       },
+          {
+          "id": 2,
+          "administrativeArea": "Tallinn",
+          "dormitoryAddress": "Raja 4D, MustamÃ¤e",
+          "dormitoryCapacity": 196,
+          "dormitoryOwner": "TTU",
+          "dormitoryCondition": "renovated",
+          "dormitoryTenantList": {"dormitoryTenant": null}
+       }
+    ]}
+
+addTenant
+---------
+
+Operatsioon uue elaniku lisamiseks süsteemi.
+
+**HTTP meetod:** POST
+
+**Ressurss:** /tenants
+
+**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/tenants/?token=asd
+
+**Päringuparameetrid:**
+
+- **token:** *(kohustuslik)* Kliendi autentimiseks kasutatav *token*.
+- **requestCode** *(kohustuslik)* Päringu unikaalne identifikaator.
+
+**POST sisend:**
+
+- **addTenantRequest:** object. *(kohustuslik)* Tenant objekt. **id** ei anta kaasa, sest **id** genereeritakse süsteemi poolt automaatselt.
+
+.. code-block:: json
+
+    {
+    	"firstName": "Pipi",
+    	"lastName": "Pikksukk",
+    	"idCode": 49204124227,
+    	"gender": "female",
+    	"studentStatus": "inactive",
+    	"university": "TLU"
+    }
+
+**Väljund:**
+
+- **addTenantResponse** tenant objekt. Sisaldab päringus antud responseCode'i ja elaniku objekti, millele on seatud **id** väärtus.
+
+.. code-block:: json
+
+    {
+       "responseCode": 9,
+       "tenant":    {
+          "id": 6,
+          "firstName": "Pipi",
+          "lastName": "Pikksukk",
+          "idCode": 49204124227,
+          "gender": "female",
+          "studentStatus": "inactive",
+          "university": "TLU"
+       }
+    }
+
+getTenant
+---------
+
+Operatsioon ühe elaniku küsimiseks talle määratud ID põhjal.
+
+**HTTP meetod:** GET
+
+**Ressurss:** /tenants/{id}
+
+**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/tenants/1/?token=asd
+
+**Päringuparameetrid:**
+
+- **token:** *(kohustuslik)* Kliendi autentimiseks kasutatav *token*.
+
+**Path-parameetrid:**
+
+- **id** *(kohustuslik)* Elaniku unikaalne identifikaator.
+
+**Väljund:**
+
+- **tenantType** tenant objekt. Sisaldab elaniku objekti, mille **id** võrdub parameetri **id** väärtusega.
+
+.. code-block:: json
+
+    {
+       "id": 1,
+       "firstName": "Eva Maria",
+       "lastName": "Veitmaa",
+       "idCode": 49606064219,
+       "gender": "female",
+       "studentStatus": "active",
+       "university": "TTU"
+    }
+
+getTenantList
+-------------
+
+Operatsioon kõigi elanike nimekirja küsimiseks.
+
+**HTTP meetod:** GET
+
+**Ressurss:** /tenants
+
+**Näidis URL:** localhost:8080/DormitoryWebApplication1/webresources/tenants/?token=asd
+
+**Päringuparameetrid:**
+
+- **token:** *(kohustuslik)* Kliendi autentimiseks kasutatav *token*.
+
+**Väljund:**
+
+- **getTenantListResponse** array. *(0 või rohkem)* Sisaldab tenant objekte, mis sobivad otsingu filtriga.
+
+.. code-block:: json
+
+    {"tenant": [
+          {
+          "id": 2,
+          "firstName": "John",
+          "lastName": "Smith",
+          "idCode": 39211040028,
+          "gender": "male",
+          "studentStatus": "active",
+          "university": "TTU"
+       },
+          {
+          "id": 3,
+          "firstName": "Peter",
+          "lastName": "Griffin",
+          "idCode": 36108201573,
+          "gender": "male",
+          "studentStatus": "active",
+          "university": "TTU"
+       }
+    ]}
+
+addDormitoryTenant
+------------------
+
+Operatsioon elaniku lisamiseks ühiselamu nimekirja.
+
+**HTTP meetod:** POST
+
+**Ressurss:** /dormitories/{id}/tenants
+
+**Näidis URL:** localhost:8080/DormitoryWebApplication1/webresources/dormitories/1/tenants/?token=asd&requestCode=9
+
+**Päringuparameetrid:**
+
+- **token:** *(kohustuslik)* Kliendi autentimiseks kasutatav *token*.
+- **requestCode** *(kohustuslik)* Päringu unikaalne identifikaator.
+
+**POST sisend:**
+
+- **addDormitoryTenantRequest** object. *(kohustuslik)* dormitoryTenant objekt. Viide vaadeldavale ühiselamule ja lisatavale elanikule.
+
+..code-block:: json
+
+    {
+    	"tenantId": 3,
+    	"startDate": "2017-04-28",
+    	"endDate": "2017-07-01",
+    	"status": "inactive"
+    }
+
+**Väljund:**
+
+- **addDormitoryTenantResponse** dormitoryTenant objekt. Sisaldab päringus antud requestCode'i ja elaniku informatsiooni.
+
+.. code-block:: json
+
+    {
+       "responseCode": 9,
+       "dormitoryTenant":    {
+          "tenant":       {
+             "id": 3,
+             "firstName": "Peter",
+             "lastName": "Griffin",
+             "idCode": 36108201573,
+             "gender": "male",
+             "studentStatus": "active",
+             "university": "TTU"
+          },
+          "startDate": 1493337600000,
+          "endDate": 1498867200000,
+          "status": "inactive"
+       }
+    }
+
+getDormitoryTenantList
+----------------------
+
+Operatsioon ühe ühiselamuga seotud elanike nimekirja küsimiseks.
+
+**HTTP meetod:** GET
+
+**Ressurss:** /dormitories/{id}/tenants
+
+**Näidis URL:** http://localhost:8080/DormitoryWebApplication1/webresources/dormitories/1/tenants/?token=asd
+
+**Päringuparameetrid:**
+
+- **token:** *(kohustuslik)* Kliendi autentimiseks kasutatav *token*.
+
+**Path-parameetrid:**
+
+- **id:** *(kohustuslik)* Ühiselamu unikaalne identifikaator.
+
+**Väljund:**
+
+- **dormitoryTenantListType** array. *(0 või rohkem)* Sisaldab kõiki vaadeldava ühiselamuga seotud elanike objekte.
+
+.. code-block:: json
+
+    {"dormitoryTenant": [
+          {
+          "tenant":       {
+             "id": 1,
+             "firstName": "Eva Maria",
+             "lastName": "Veitmaa",
+             "idCode": 49606064219,
+             "gender": "female",
+             "studentStatus": "active",
+             "university": "TTU"
+          },
+          "startDate": 1439672400000,
+          "endDate": 1497042000000,
+          "status": "active"
+       },
+          {
+          "tenant":       {
+             "id": 2,
+             "firstName": "John",
+             "lastName": "Smith",
+             "idCode": 39211040028,
+             "gender": "male",
+             "studentStatus": "active",
+             "university": "TTU"
+          },
+          "startDate": 1414792800000,
+          "endDate": 1497042000000,
+          "status": "active"
+       },
+          {
+          "tenant":       {
+             "id": 3,
+             "firstName": "Peter",
+             "lastName": "Griffin",
+             "idCode": 36108201573,
+             "gender": "male",
+             "studentStatus": "active",
+             "university": "TTU"
+          },
+          "startDate": 1493337600000,
+          "endDate": 1498867200000,
+          "status": "inactive"
+       }
+    ]}

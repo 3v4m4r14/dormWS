@@ -97,7 +97,7 @@ public class DormitoriesResource {
     @Produces(MediaType.APPLICATION_JSON)
     public AddDormitoryResponse addDormitory(AddDormitoryRequest content, 
             @QueryParam("requestCode") int requestCode,
-            @QueryParam("token") String token) throws InvalidTokenException {
+            @QueryParam("token") String token) throws InvalidTokenException, InvalidRequestCodeException, InvalidInputDataException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         AddDormitoryRequest request = new AddDormitoryRequest();
         request.setRequestCode(BigInteger.valueOf(requestCode));
@@ -121,7 +121,8 @@ public class DormitoriesResource {
     public AddDormitoryTenantResponse addDormitoryTenant(AddDormitoryTenantRequest content, 
                                         @QueryParam("token") String token,
                                         @QueryParam("requestCode") int requestCode,
-                                        @PathParam("id") String id) throws InvalidTokenException {
+                                        @PathParam("id") String id) throws InvalidTokenException, InvalidRequestCodeException, InvalidInputDataException {
+        
         DormitoryWebService1 ws = new DormitoryWebService1();
         AddDormitoryTenantRequest request = new AddDormitoryTenantRequest();
         request.setToken(token);

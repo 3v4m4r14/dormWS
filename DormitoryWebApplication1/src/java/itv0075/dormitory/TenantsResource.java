@@ -15,6 +15,7 @@ import java.math.BigInteger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -83,13 +84,14 @@ public class TenantsResource {
     /**
      * POST method for updating or creating an instance of TenantsResource
      * @param content representation for the resource
+     * @param requestCode
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public AddTenantResponse addTenant(AddTenantRequest content, 
             @QueryParam("requestCode") int requestCode,
-            @QueryParam("token") String token) throws InvalidTokenException {
+            @QueryParam("token") String token) throws InvalidTokenException, InvalidInputDataException, InvalidRequestCodeException {
         DormitoryWebService1 ws = new DormitoryWebService1();
         AddTenantRequest request = new AddTenantRequest();
         request.setRequestCode(BigInteger.valueOf(requestCode));

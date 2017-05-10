@@ -7,12 +7,12 @@ package itv0075.dormitory;
 
 /**
  *
- * @author Eva Maria Veitmaa
+ * @author emvei
  */
-public class InvalidTokenException extends Throwable {
+public class InvalidRequestCodeException extends Exception {
 
-    public InvalidTokenException() {
-        super("Invalid token.");
+    public InvalidRequestCodeException() {
+        super("Invalid request code.");
     }
     
 }

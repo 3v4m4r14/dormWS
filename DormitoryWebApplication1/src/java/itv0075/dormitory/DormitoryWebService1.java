@@ -31,7 +31,7 @@ import javax.jws.WebService;
 
 /**
  * Web Service
- * 
+ *
  * @author Eva Maria Veitmaa
  */
 @WebService(serviceName = "dormitoryService1", portName = "dormitoryPort", endpointInterface = "ee.ttu.idu0075._2015.ws.dormitory.DormitoryPortType", targetNamespace = "http://www.ttu.ee/idu0075/2015/ws/dormitory", wsdlLocation = "WEB-INF/wsdl/DormitoryService1/dormitoryService.wsdl")
@@ -49,168 +49,197 @@ public class DormitoryWebService1 {
 
     public TenantType getTenant(GetTenantRequest parameter) throws InvalidTokenException {
         TenantType tenant = null;
-        if (API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
-            for (TenantType t : tenantList) {
-                if (t.getId().equals(parameter.getId())) {
-                    tenant = t;
-                }
+        if (!API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
+            throw new InvalidTokenException();
+        }
+
+        for (TenantType t : tenantList) {
+            if (t.getId().equals(parameter.getId())) {
+                tenant = t;
             }
-        } else {
-            throw new InvalidTokenException("Invalid token.");
         }
         return tenant;
     }
 
-    public AddTenantResponse addTenant(AddTenantRequest parameter) throws InvalidTokenException {
+    public AddTenantResponse addTenant(AddTenantRequest parameter) throws InvalidTokenException, InvalidInputDataException, InvalidRequestCodeException {
         AddTenantResponse response = new AddTenantResponse();
         TenantType tenant = new TenantType();
 
-        if (API_TOKEN.equalsIgnoreCase(parameter.getToken()) && parameter.getRequestCode() != null) {
-
-            response.setResponseCode(parameter.getRequestCode());
-
-            if (addTenantMap.containsKey(parameter.getRequestCode())) {
-                response.setTenant(addTenantMap.get(parameter.getRequestCode()));
-            } else {
-                tenant.setId(BigInteger.valueOf(nextTenantId++));
-                tenant.setFirstName(parameter.getFirstName());
-                tenant.setLastName(parameter.getLastName());
-                tenant.setIdCode(parameter.getIdCode());
-                tenant.setGender(parameter.getGender());
-                tenant.setStudentStatus(parameter.getStudentStatus());
-                tenant.setUniversity(parameter.getUniversity());
-                tenantList.add(tenant);
-                addTenantMap.put(parameter.getRequestCode(), tenant);
-                response.setTenant(tenant);
-            }
-        } else {
-            throw new InvalidTokenException("Invalid token.");
+        if (!API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
+            throw new InvalidTokenException();
+        }
+        if (parameter.getRequestCode() == null) {
+            throw new InvalidRequestCodeException();
         }
 
+        response.setResponseCode(parameter.getRequestCode());
+
+        if (addTenantMap.containsKey(parameter.getRequestCode())) {
+            response.setTenant(addTenantMap.get(parameter.getRequestCode()));
+        } else {
+            if (!(genderIsValid(parameter)
+                    && statusIsValid(parameter))) {
+                throw new InvalidInputDataException();
+            }
+            tenant.setId(BigInteger.valueOf(nextTenantId++));
+            tenant.setFirstName(parameter.getFirstName());
+            tenant.setLastName(parameter.getLastName());
+            tenant.setIdCode(parameter.getIdCode());
+            tenant.setGender(parameter.getGender().toLowerCase());
+            tenant.setStudentStatus(parameter.getStudentStatus().toLowerCase());
+            tenant.setUniversity(parameter.getUniversity());
+            tenantList.add(tenant);
+            addTenantMap.put(parameter.getRequestCode(), tenant);
+            response.setTenant(tenant);
+        }
         return response;
+    }
+
+    private static boolean statusIsValid(AddTenantRequest parameter) {
+        return parameter.getStudentStatus().equalsIgnoreCase("active")
+                || parameter.getStudentStatus().equalsIgnoreCase("inactive");
+    }
+
+    private static boolean genderIsValid(AddTenantRequest parameter) {
+        return parameter.getGender().equalsIgnoreCase("male") || parameter.getGender().equalsIgnoreCase("female")
+                || parameter.getGender().equalsIgnoreCase("other");
     }
 
     public GetTenantListResponse getTenantList(GetTenantListRequest parameter) throws InvalidTokenException {
         GetTenantListResponse tenants = new GetTenantListResponse();
-        if (API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
-            for (TenantType tenant : tenantList) {
-                if (tenantParametersMatch(parameter, tenant)) {
-                    tenants.getTenant().add(tenant);
-                }
+        if (!API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
+            throw new InvalidTokenException();
+        }
+
+        for (TenantType tenant : tenantList) {
+            if (tenantParametersMatch(parameter, tenant)) {
+                tenants.getTenant().add(tenant);
             }
-        } else {
-            throw new InvalidTokenException("Invalid token.");
         }
         return tenants;
     }
 
     public DormitoryType getDormitory(GetDormitoryRequest parameter) throws InvalidTokenException {
         DormitoryType response = null;
-        if (API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
-            for (DormitoryType dormitory : dormitoryList) {
-                if (dormitory.getId().equals(parameter.getId())) {
-                    response = dormitory;
-                }
+        if (!API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
+            throw new InvalidTokenException();
+        }
+        for (DormitoryType dormitory : dormitoryList) {
+            if (dormitory.getId().equals(parameter.getId())) {
+                response = dormitory;
             }
-        } else {
-            throw new InvalidTokenException("Invalid token.");
         }
         return response;
     }
 
-    public AddDormitoryResponse addDormitory(AddDormitoryRequest parameter) throws InvalidTokenException {
+    public AddDormitoryResponse addDormitory(AddDormitoryRequest parameter) throws InvalidTokenException, InvalidRequestCodeException, InvalidInputDataException {
         AddDormitoryResponse response = new AddDormitoryResponse();
         DormitoryType dormitory = new DormitoryType();
-        if (API_TOKEN.equalsIgnoreCase(parameter.getToken()) && parameter.getRequestCode() != null) {
-
-            response.setResponseCode(parameter.getRequestCode());
-
-            if (addDormitoryMap.containsKey(parameter.getRequestCode())) {
-                response.setDormitory(addDormitoryMap.get(parameter.getRequestCode()));
-            } else {
-                dormitory.setId(BigInteger.valueOf(nextDormitoryId++));
-                dormitory.setAdministrativeArea(parameter.getAdministrativeArea());
-                dormitory.setDormitoryAddress(parameter.getDormitoryAddress());
-                dormitory.setDormitoryCapacity(parameter.getDormitoryCapacity());
-                dormitory.setDormitoryOwner(parameter.getDormitoryOwner());
-                dormitory.setDormitoryCondition(parameter.getDormitoryCondition());
-                dormitory.setDormitoryTenantList(new DormitoryTenantListType());
-                dormitoryList.add(dormitory);
-                addDormitoryMap.put(parameter.getRequestCode(), dormitory);
-                response.setDormitory(dormitory);
-            }
-        } else {
-            throw new InvalidTokenException("Invalid token.");
+        if (!API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
+            throw new InvalidTokenException();
         }
+        if (parameter.getRequestCode() == null) {
+            throw new InvalidRequestCodeException();
+        }
+
+        response.setResponseCode(parameter.getRequestCode());
+
+        if (addDormitoryMap.containsKey(parameter.getRequestCode())) {
+            response.setDormitory(addDormitoryMap.get(parameter.getRequestCode()));
+        } else {
+            if (!conditionIsValid(parameter)) {
+                throw new InvalidInputDataException();
+            }
+            dormitory.setId(BigInteger.valueOf(nextDormitoryId++));
+            dormitory.setAdministrativeArea(parameter.getAdministrativeArea());
+            dormitory.setDormitoryAddress(parameter.getDormitoryAddress());
+            dormitory.setDormitoryCapacity(parameter.getDormitoryCapacity());
+            dormitory.setDormitoryOwner(parameter.getDormitoryOwner());
+            dormitory.setDormitoryCondition(parameter.getDormitoryCondition().toLowerCase());
+            dormitory.setDormitoryTenantList(new DormitoryTenantListType());
+            dormitoryList.add(dormitory);
+            addDormitoryMap.put(parameter.getRequestCode(), dormitory);
+            response.setDormitory(dormitory);
+        }
+
         return response;
+    }
+
+    private static boolean conditionIsValid(AddDormitoryRequest parameter) {
+        return parameter.getDormitoryCondition().equalsIgnoreCase("old")
+                || parameter.getDormitoryCondition().equalsIgnoreCase("new")
+                || parameter.getDormitoryCondition().equalsIgnoreCase("renovated");
     }
 
     public GetDormitoryListResponse getDormitoryList(GetDormitoryListRequest parameter) throws InvalidTokenException {
 
         GetDormitoryListResponse dormitories = new GetDormitoryListResponse();
 
-        if (API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
-            for (DormitoryType dormitory : dormitoryList) {
-                if (dormitoryParametersMatch(parameter, dormitory)) {
-                    dormitories.getDormitory().add(dormitory);
-                }
-            }
-        } else {
-            throw new InvalidTokenException("Invalid token.");
+        if (!API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
+            throw new InvalidTokenException();
         }
-
+        for (DormitoryType dormitory : dormitoryList) {
+            if (dormitoryParametersMatch(parameter, dormitory)) {
+                dormitories.getDormitory().add(dormitory);
+            }
+        }
         return dormitories;
     }
 
     public DormitoryTenantListType getDormitoryTenantList(GetDormitoryTenantListRequest parameter) throws InvalidTokenException {
         DormitoryTenantListType dormitoryTenants = new DormitoryTenantListType();
 
-        if (API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
-            for (DormitoryType dormitory : dormitoryList) {
-                if (parameter.getDormitoryId().equals(dormitory.getId())) {
-                    dormitoryTenants = dormitory.getDormitoryTenantList();
-                }
+        if (!API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
+            throw new InvalidTokenException();
+        }
+        for (DormitoryType dormitory : dormitoryList) {
+            if (parameter.getDormitoryId().equals(dormitory.getId())) {
+                dormitoryTenants = dormitory.getDormitoryTenantList();
             }
-        } else {
-            throw new InvalidTokenException("Invalid token.");
         }
         return dormitoryTenants;
     }
 
-    public AddDormitoryTenantResponse addDormitoryTenant(AddDormitoryTenantRequest parameter) throws InvalidTokenException {
+    public AddDormitoryTenantResponse addDormitoryTenant(AddDormitoryTenantRequest parameter) throws InvalidTokenException, InvalidRequestCodeException, InvalidInputDataException {
         AddDormitoryTenantResponse response = new AddDormitoryTenantResponse();
         DormitoryTenantType dormitoryTenant = new DormitoryTenantType();
 
-        if (API_TOKEN.equalsIgnoreCase(parameter.getToken()) && parameter.getRequestCode() != null) {
+        if (!API_TOKEN.equalsIgnoreCase(parameter.getToken())) {
+            throw new InvalidTokenException();
+        }
+        if (parameter.getRequestCode() == null) {
+            throw new InvalidRequestCodeException();
+        }
 
-            response.setResponseCode(parameter.getRequestCode());
+        response.setResponseCode(parameter.getRequestCode());
 
-            if (addDormitoryTenantMap.containsKey(parameter.getRequestCode())) {
-                response.setDormitoryTenant(addDormitoryTenantMap.get(parameter.getRequestCode()));
-            } else {
+        if (addDormitoryTenantMap.containsKey(parameter.getRequestCode())) {
+            response.setDormitoryTenant(addDormitoryTenantMap.get(parameter.getRequestCode()));
+        } else {
 
-                GetTenantRequest tenantRequest = new GetTenantRequest();
-                tenantRequest.setId(parameter.getTenantId());
-                tenantRequest.setToken(parameter.getToken());
+            GetTenantRequest tenantRequest = new GetTenantRequest();
+            tenantRequest.setId(parameter.getTenantId());
+            tenantRequest.setToken(parameter.getToken());
 
-                if (getTenant(tenantRequest) != null) {
-                    dormitoryTenant.setTenant(getTenant(tenantRequest));
-                    dormitoryTenant.setStartDate(parameter.getStartDate());
-                    dormitoryTenant.setEndDate(parameter.getEndDate());
-                    dormitoryTenant.setStatus(parameter.getStatus());
+            if (getTenant(tenantRequest) != null) {
+                if (!(parameter.getStatus().equalsIgnoreCase("active")
+                        || parameter.getStatus().equalsIgnoreCase("inactive"))) {
+                    throw new InvalidInputDataException();
+                }
+                dormitoryTenant.setTenant(getTenant(tenantRequest));
+                dormitoryTenant.setStartDate(parameter.getStartDate());
+                dormitoryTenant.setEndDate(parameter.getEndDate());
+                dormitoryTenant.setStatus(parameter.getStatus().toLowerCase());
 
-                    for (DormitoryType dormitory : dormitoryList) {
-                        if (dormitory.getId().equals(parameter.getDormitoryId())
-                                && !dormitory.getDormitoryTenantList().getDormitoryTenant().contains(dormitoryTenant)) {
-                            dormitory.getDormitoryTenantList().getDormitoryTenant().add(dormitoryTenant);
-                            addDormitoryTenantMap.put(parameter.getRequestCode(), dormitoryTenant);
-                            response.setDormitoryTenant(dormitoryTenant);
-                        }
+                for (DormitoryType dormitory : dormitoryList) {
+                    if (dormitory.getId().equals(parameter.getDormitoryId())
+                            && !dormitory.getDormitoryTenantList().getDormitoryTenant().contains(dormitoryTenant)) {
+                        dormitory.getDormitoryTenantList().getDormitoryTenant().add(dormitoryTenant);
+                        addDormitoryTenantMap.put(parameter.getRequestCode(), dormitoryTenant);
+                        response.setDormitoryTenant(dormitoryTenant);
                     }
                 }
             }
-        } else {
-            throw new InvalidTokenException("Invalid token.");
         }
         return response;
     }
@@ -249,7 +278,7 @@ public class DormitoryWebService1 {
                 && hasRelatedTenantsMatch(parameter, dt)
                 && conditionsMatch(parameter, dt);
     }
-    
+
     private static boolean conditionsMatch(GetDormitoryListRequest parameter, DormitoryType dt) {
         return parameter.getDormitoryCondition() == null
                 || parameter.getDormitoryCondition().equalsIgnoreCase(dt.getDormitoryCondition());
@@ -264,7 +293,7 @@ public class DormitoryWebService1 {
     }
 
     private static boolean ownersMatch(GetDormitoryListRequest parameter, DormitoryType dt) {
-        return parameter.getDormitoryOwner() == null 
+        return parameter.getDormitoryOwner() == null
                 || (parameter.getDormitoryOwner().equalsIgnoreCase(dt.getDormitoryOwner()));
     }
 
